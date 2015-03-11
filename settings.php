@@ -1,5 +1,43 @@
 <?php
+/*
+öppnar preliminärt 1/4 och stänger 1/5
 
+Target prices for seminars etc. (preliminary):
+Taido seminars 350 SEK
+Judge seminars 250 SEK
+Junior taido seminars 200 SEK
+Banquet 550 SEK
+ITFG participation: 350 SEK
+ETC participation: 500 SEK
+
+Single room incl. breakfast & lunch: 1300 SEK/day
+Double room incl. breakfast & lunch: 2200 SEK/day
+6 bed cabin incl. breakfast, lunch and cleaning (after checkout): 13800 SEK for the week. 
+(2300 SEK/week/person if you are 6 in the cabin).
+
+3/8
+Arrival & welcome party
+4/8
+seminars
+EUTAI meeting
+WTF meeting
+5/8
+Seminars 
+shinsa
+6/8
+Seminars 
+Judge seminar
+7/8
+IFG
+8/8
+ETC
+banquet
+9/8
+Judge meeting
+departure
+
+
+*/
 $str_event_name = "European Taido Championships 2015";
 $str_event_name_exl_year = "European Taido Championship";
 $str_event_short = "ETC2015";
