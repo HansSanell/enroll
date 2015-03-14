@@ -1,6 +1,3 @@
-<?php
-include "settings.php"; 
-?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -203,7 +200,7 @@ include "settings.php";
 		        <label class="requireValue" data-variable="role" data-value="!null">
 			        <span class="title">Role</span>
 			        <div class="requireValue" data-variable="role" data-value="wtc">
-                        <?php $str_event_shorter ?> Competitor
+                        <?php echo $str_event_shorter ?> Competitor
 			        </div>
 			        <div class="requireValue" data-variable="role" data-value="staff">
 			        Staff
@@ -215,15 +212,15 @@ include "settings.php";
 		        <div class="packages">
 			        <div class="requireValue" data-variable="role" data-value="wtc">
 				        <div class="package variable" id="wtcPackage" data-variable="package" data-value="WTC Competitor">
-					        <div class="title"><?php $str_event_short ?> Competitor package</div>
+					        <div class="title"><?php echo $str_event_short ?> Competitor package</div>
 
 					        <div class="contents">						
 						        Package includes
-                                <?php $comp_event_package_includes ?>
+                                <?php echo $comp_event_package_includes ?>
 
 					        </div>
 					
-					        <div class="price"><?php $comp_package_price?></div>
+					        <div class="price"><?php echo $comp_package_price?></div>
 						
 				        </div>
 			        </div>
@@ -234,21 +231,21 @@ include "settings.php";
 
 						        <div class="contents">
 							        Package includes
-                                    <?php $tourist_event_package_includes ?>
+                                    <?php echo $tourist_event_package_includes ?>
 						        </div>							
 						
-						        <div class="price" id="touristPrice"><?php $tourist_event_package_price ?></div>
+						        <div class="price" id="touristPrice"><?php echo $tourist_event_package_price ?></div>
 					        </div>
 					        <div class="requireEnabled" data-variable="ifgJudge">
 						        <div class="package variable" id="wtcPackage" data-variable="package" data-value="Judge">
-							        <div class="title"><?php $str_event_short ?> Judge package</div>
+							        <div class="title"><?php echo $str_event_short ?> Judge package</div>
 
 							        <div class="contents">
 								        Package includes
-                                        <?php $judge_event_package_include ?>
+                                        <?php echo $judge_event_package_include ?>
 							        </div>							
 							
-							        <div class="price"><?php $judge_event_package_price ?></div>
+							        <div class="price"><?php echo $judge_event_package_price ?></div>
 						        </div>				
 					        </div>
 					
@@ -259,11 +256,11 @@ include "settings.php";
 
 							        <div class="contents">
 								        Package includes
-                                        <?php $volonteer_package?>
+                                        <?php echo $volonteer_package?>
 
 							        </div>							
 							
-							        <div class="price"><?php $volonteer_package_price ?></div>
+							        <div class="price"><?php echo $volonteer_package_price ?></div>
 						        </div>				
 					        </div>
 				        </div>
@@ -273,11 +270,11 @@ include "settings.php";
 
 						        <div class="contents">
 							        Package includes
-                                    <?php $staff_package_include ?>
+                                    <?php echo $staff_package_include ?>
 
 						        </div>							
 						
-                            <div class="price"><?php $staff_package_price?></div>
+                            <div class="price"><?php echo $staff_package_price?></div>
 					        </div>				
 				        </div>				
 			        </div>
@@ -292,7 +289,7 @@ include "settings.php";
 					        Please enter your dietary restrictions.
 				        </div>
 			        </label>
-                    <?php tshirts ?>
+                    <?php echo $tshirts ?>
 		        </div>
 	        </div><!-- packages page -->
 
@@ -302,7 +299,7 @@ include "settings.php";
 		        <h2>Rules and information</h2>
 
 		        <ol>
-			        <li>Pacticipation costs <?php $ifg_fee ?>.</li>
+			        <li>Pacticipation costs <?php echo $ifg_fee ?>.</li>
 			        <li>Competitors have to be members of a national taido organization that belongs to the World Taido Federation.</li>					
 					
 			        <li>You only see events to which you are allowed to compete in.</li>					
@@ -310,7 +307,7 @@ include "settings.php";
 					
 			        <li>In case too many or too few competitors have applied to a specific event, the competition committee reserves the right to make alterations in the event compositions. Information about any changes will be sent through the national taido organizations.</li>
 					
-			        <li>Participants  of  the  <?php $str_event_name_exl_year ?>  (<?php $str_event_shorter?>)  are  not  allowed  to  participate  in  the International Friendship Games (IFG). </li>
+			        <li>Participants  of  the  <?php echo $str_event_name_exl_year ?>  (<?php echo $str_event_shorter?>)  are  not  allowed  to  participate  in  the International Friendship Games (IFG). </li>
 					
 			        <li>Before a person can be added to a dantai or tenkai team, he or she must have selected the corresponding IFG event and submitted his or her enrollment. This includes the people in reserve. </li>
 					
@@ -346,7 +343,7 @@ include "settings.php";
 		        </div>
 		        <div class="warning disabled" id="eventB3warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B3 Jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of B3 Jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
 		        <div class="event variable" id="eventB4" data-variable="eventB4">
 			        <div class="code">B4</div>
@@ -356,7 +353,7 @@ include "settings.php";
 		        </div>
 		        <div class="warning disabled" id="eventB4warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B4 Jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of B4 Jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
 		        <div class="event variable" id="eventB5" data-variable="eventB5">
 			        <div class="code">B5</div>
@@ -380,7 +377,7 @@ include "settings.php";
 		        </div>
 		        <div class="warning disabled" id="eventB7warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B7 Jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of B7 Jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>			
 		        <div class="event variable" id="eventB8" data-variable="eventB8">
 			        <div class="code">B8</div>
@@ -390,7 +387,7 @@ include "settings.php";
 		        </div>
 		        <div class="warning disabled" id="eventB8warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B8 Jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of B8 Jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>			
 		        <div class="event variable" id="eventB9" data-variable="eventB9">
 			        <div class="code">B9</div>
@@ -474,7 +471,7 @@ include "settings.php";
 		        </div>			
 		        <div class="warning disabled" id="eventB20warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B20 Dantai jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of B20 Dantai jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
 			
 		        <div class="event variable" id="eventB21" data-variable="eventB21">
@@ -486,7 +483,7 @@ include "settings.php";
 		        </div>			
 		        <div class="warning disabled" id="eventB21warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B21 Dantai jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of B21 Dantai jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
 			
 		        <div class="event variable" id="eventB22" data-variable="eventB22">
@@ -625,19 +622,19 @@ include "settings.php";
 		        <h1>Judge</h1>
 		
 		        <p>
-			        A judge in <?php $str_event_shorter ?> must have 4 dan and be experienced in judging. If you will complete 4 dan shinsa during the <?php $str_event_short?> event,
-			        you may enroll as a judge in <?php $str_event_shorter?>. A judge in IFG should also have 4 dan and be experienced in judging. However, if you have
+			        A judge in <?php echo $str_event_shorter ?> must have 4 dan and be experienced in judging. If you will complete 4 dan shinsa during the <?php echo $str_event_short?> event,
+			        you may enroll as a judge in <?php echo $str_event_shorter?>. A judge in IFG should also have 4 dan and be experienced in judging. However, if you have
                     a recommendation from your national taido organization, you may apply the right to judge in the IFG event. 
-                    <?php $contact_name ?> and World Taido Federation will review all judge enrollments and decide if a person is qualified. 
+                    <?php echo $contact_name ?> and World Taido Federation will review all judge enrollments and decide if a person is qualified. 
 		        </p>
 		        <p>
-			        Enrollment as judge is binding. All judges who enroll to <?php $str_event_shorter ?> must enroll also
-			        IFG as judge. Competitors of <?php $str_event_shorter?> can enroll to judge in IFG, but cannot enroll as judges in <?php $str_event_shorter?>.
+			        Enrollment as judge is binding. All judges who enroll to <?php echo $str_event_shorter ?> must enroll also
+			        IFG as judge. Competitors of <?php echo $str_event_shorter?> can enroll to judge in IFG, but cannot enroll as judges in <?php echo $str_event_shorter?>.
 		        </p>
 		
 		        <div class="requireValue" data-variable="taidoRank" data-value="3">
 			        <label>
-				        <span class="title">Will you complete 4 dan during the <?php $str_event_shorter?> Event?</span>
+				        <span class="title">Will you complete 4 dan during the <?php echo $str_event_shorter?> Event?</span>
 				        <div class="variable" data-variable="willComplete4dan">Yes</div>
 			        </label>
 		        </div>		
@@ -645,7 +642,7 @@ include "settings.php";
 		        <div class="clearfloat"></div>
 		
 		        <div class="variable" id="wtcJudge" data-variable="wtcJudge">
-			        <?php $str_event_name_exl_year ?> judge
+			        <?php echo $str_event_name_exl_year ?> judge
 		        </div>
 		        <div class="variable" id="ifgJudge" data-variable="ifgJudge">
 			        International Friendship Games judge 
@@ -768,7 +765,7 @@ include "settings.php";
 		        <div class="clearfloat"></div>	
 	        </div> <!-- Volunteers page -->
 
-            <?php $hotel_page ?>
+            <?php echo $hotel_page ?>
 
 
 	        <div class="page" id="optionalPage">
@@ -780,20 +777,20 @@ include "settings.php";
 		        <div class="requireEnabled" data-variable="optionalBanquette">
 			        <h2>Events</h2>
 			        <div class="variable option" data-variable="optionalBanquette">
-                        <?php $banquette ?>
+                        <?php echo $banquette ?>
 
 			        </div>
 
 			        <div class="variable option" data-variable="optionalWTCticket">
-				        <div class="title"><?php $str_event_shorter?> ticket</div>
+				        <div class="title"><?php echo $str_event_shorter?> ticket</div>
 				        <div class="contents">&nbsp;</div>
-				        <div class="price" id="wtcTicketPrice"><? $str_event_price ?></div>
+				        <div class="price" id="wtcTicketPrice"><?php echo $str_event_price ?></div>
 			        </div>
 			
 			        <div class="clearfloat"></div>
 		        </div>
 
-		        <?php $sightseeing ?>
+		        <?php echo $sightseeing ?>
 
 	        </div>
 
@@ -1055,7 +1052,7 @@ include "settings.php";
 				        <h2>Selected judge duty</h2>
 				  
 				        <div class="varSummary">			
-					        <span class="title"><?php $str_event_name_exl_year ?></span>
+					        <span class="title"><?php echo $str_event_name_exl_year ?></span>
 					        <div class="requireValue" data-variable="wtcJudge" data-value="yes">yes</div><div class="requireValue" data-variable="wtcJudge" data-value="!yes">no</div>
 				        </div>					
 
@@ -1146,7 +1143,7 @@ include "settings.php";
 			
 			
 			        <h2>Hotel</h2>
-			        <?php $hotel_summary ?>
+			        <?php echo $hotel_summary ?>
 
 			
 			        <div class="requireValue" data-variable="package" data-value="!Staff">
@@ -1163,10 +1160,10 @@ include "settings.php";
 			        </div>
 			
 			        <div class="varSummary requireValue" data-variable="optionalWTCticket">
-				        <span><?php $str_event_shorter ?> ticket</span>
+				        <span><?php echo $str_event_shorter ?> ticket</span>
 				        <div class="costSummary">20 &euro;</div>
 			        </div>
-			        <?php $sightseeing_summary ?>
+			        <?php echo $sightseeing_summary ?>
 
 			
 			        <div class="varSummary requireValue" data-variable="optionalsCost" data-value="0">
@@ -1182,8 +1179,8 @@ include "settings.php";
 			        <h2>Submit enrollment</h2>
 			        <p>
 				        Please check that the above information is correct. When you are confident with the content, submit your information as enrollment 
-                        to the <?php $str_event_short ?> event. You may revisit your submission and resubmit. You may also retract your submission. You are able to do this
-                        until the submission deadline <?php $submission_deadline ?>.
+                        to the <?php echo $str_event_short ?> event. You may revisit your submission and resubmit. You may also retract your submission. You are able to do this
+                        until the submission deadline <?php echo $submission_deadline ?>.
 			        </p>
 			
 			        <div class="varSummary">
@@ -1219,7 +1216,7 @@ include "settings.php";
 
 	<div id="footer">
 		<div id="footerLeft">
-			Help? <a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>
+			Help? <a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>
 		</div>
         <!-- TODO: Remove? -->
 		<div id="footerRight">
@@ -1236,7 +1233,7 @@ include "settings.php";
         people will be able to add you to their teams.
 	</p>	
 	<p>
-        You may update your submission or retract it at any time before the submission deadline <?php $submission_deadline ?>.
+        You may update your submission or retract it at any time before the submission deadline <?php echo $submission_deadline ?>.
 	</p>
 </div>
 
@@ -1245,7 +1242,7 @@ include "settings.php";
         Do you really want to retract your submission? You will be removed from any IFG dantai or tenkai teams you might be selected in.
 	</p>	
 	<p>
-		You may resubmit at any time before the submission deadline <?php $submission_deadline ?>.
+		You may resubmit at any time before the submission deadline <?php echo $submission_deadline ?>.
 	</p>
 </div>
 
