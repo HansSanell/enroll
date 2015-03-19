@@ -166,7 +166,7 @@ if (array_key_exists("ifgJudge",$variables) && strcmp($variables["ifgJudge"],"ye
 	// Judge duty?>
 Judge
 	<? 
-		if (array_key_exists("wtcJudge",$variables)) echo "World Taido Championships, ";
+		if (array_key_exists("wtcJudge",$variables)) echo "World Taido Championships, ";	//TODO: Substitute text!?
 		echo "International Friendship Games\n";?>
 	National seminars				<? echo $variables["judgeNationalSeminars"]; ?>	
 	International seminars			<? echo $variables["judgeInternationalSeminars"]; ?>	

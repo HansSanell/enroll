@@ -2,7 +2,7 @@
 include "settings.php"; 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html> <!-- PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  --> 
 <html>
 <head>
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
@@ -43,7 +43,7 @@ include "settings.php";
 	    <div class="registerinfo" id="loginForm">
 		    <div class="title">Email address</div>
 		    <div id="emailaddress">
-			    <input type="text" id="email" name="email">
+			    <input type="text" id="email" name="email"/>
 		    </div>
 		    <div id="submitLogin">Submit</div>
 	    </div>

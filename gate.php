@@ -1,4 +1,6 @@
-<?
+<!DOCTYPE html>
+
+<?php
 if (!strcmp($_SERVER['REQUEST_METHOD'],'POST'))
 	$INDATA = $_POST;
 else 
@@ -17,7 +19,7 @@ if (array_key_exists("person", $_SESSION)) {
 	$person = $result->fetch_object();
 	
 	if (!$person) {
-    ?>
+?>
 <html>
 <head>
     <script type="text/javascript">
@@ -35,7 +37,7 @@ if (array_key_exists("person", $_SESSION)) {
 	Your login information could not be found. Please request new login information from the register page. Redirecting in <div id="remaining" style="display: inline;">10</div> seconds...
 </body>
 </html>
-	<?
+<?php
 		exit();
 	}
 }

@@ -1,5 +1,4 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html> <!-- PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
 <html>
 <head>
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
@@ -138,9 +137,9 @@
 		        </div>
 		
 		        <label for=""><span class="title">Date of birth</span>
-			        Day <input type="text" name="birthDay" id="birthDay" size=2 class="variable" data-variable="birthDay" />
-			        Month <input type="text" name="birthMonth" id="birthMonth" size=2 class="variable" data-variable="birthMonth" />
-			        Year <input type="text" name="birthYear" id="birthYear" size=4 class="variable" data-variable="birthYear" />	
+			        Day <input type="text" name="birthDay" id="birthDay" size="2" class="variable" data-variable="birthDay" />
+			        Month <input type="text" name="birthMonth" id="birthMonth" size="2" class="variable" data-variable="birthMonth" />
+			        Year <input type="text" name="birthYear" id="birthYear" size="4" class="variable" data-variable="birthYear" />	
 			        <div class="variableErrorMessage" data-variable="birthDay">
 				        Day of birth must be a number between 1-31.
 			        </div>
@@ -549,8 +548,8 @@
 				
 			        <label for="teamB20_name"><span class="title">Team name</span>
 				        <input type="text" name="teamB20_name" id="teamB20_name" class="variable" data-variable="teamB20_name" />
-				        <div id="teamB20_loading" class="loading"><img src="images/ajax-loader.gif"></div>
-				        <div id="teamB20_nameok" class="nameok"><img src="images/tick.png"></div>
+				        <div id="teamB20_loading" class="loading"><img src="images/ajax-loader.gif"/></div>
+				        <div id="teamB20_nameok" class="nameok"><img src="images/tick.png"/></div>
 			        </label>
 			        <div class="variableErrorMessage" data-variable="teamB20_name">
 				        Please enter a unique name of at least 4 characters for the team, or clear the name to remove the team.

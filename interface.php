@@ -283,6 +283,8 @@ case "storePerson":
 		echo "You do not have permission to access this page. Please contact " + $contact_email + ".";
 		exit();
 	}	
+
+	echo "Hej!";
 	
 	// Update personal data
 	$data = json_decode($INDATA["data"]);
@@ -326,7 +328,6 @@ case "storePerson":
 			$data->role);			
 	}
 	
-		
 	$stmt->execute() or die($mysqli->error);
 	
 	if ($data->personid == -99) {
@@ -365,7 +366,7 @@ case "submit":
 		$person->personid);
 		
 	$stmt->execute() or die($mysqli->error);
-	
+
 	// Personal information update successful	
 	$result = $mysqli->query("SELECT * FROM tee_people WHERE personid=".$person->personid) or die($mysqli->error);
 	$person = $result->fetch_object();

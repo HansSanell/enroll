@@ -417,6 +417,7 @@ function GlobalModel() {
 		$.each(variables, function() {
 			// Point the variables that cause the effect to that single copy of effects
 			mdl.variables[this].effects.push(index);
+			//variable.effects.push(index);
 		});
 		// This allows us to iterate through all effects at once, invoking each effect once.
 		// This becomes necessary when loading all values from the server
@@ -717,7 +718,8 @@ var eventRules = [
 	
 var model, pages;		
 	
-$(function() {
+//$(window).bind("load", function() {
+$(function () {
 
 	// Find out the login id
 	var regex = new RegExp("[\\?&]loginid=([^&#]*)");
