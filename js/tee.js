@@ -825,7 +825,7 @@ $(function () {
 		for(var i = 0; i < eventRules.length && !selected; ++i) {
 			selected |= model.getValue("event"+eventRules[i][0]) == "yes";
 		}
-		model.setValue("ifgCost",(selected)?30:0);		
+		model.setValue("ifgCost",(selected)?350:0);		
 	});
 	
 	// Age alerts for events
@@ -861,24 +861,23 @@ $(function () {
 	// Allow volunteer work only when no overlapping events are selected
 	model.addEffect(["ifgCost", "role", "ifgJudge", "wtcJudge"], function () {
 		var occupied028 = (model.getValue("ifgCost") > 0) || (model.getValue("ifgJudge") == "yes") || (model.getValue("role")=="staff");
-		model.setEnabled("volunteerKiosk028", !occupied028);
-		model.setEnabled("volunteerSecurity028", !occupied028);		
+	//	model.setEnabled("volunteer", !occupied028);
+	//	model.setEnabled("volunteerSecurity028", !occupied028);		
 		
 		var occupied038 = (model.getValue("role") == "wtc") || (model.getValue("wtcJudge") == "yes") || (model.getValue("role")=="staff");
-		model.setEnabled("volunteerKiosk038", !occupied038);
-		model.setEnabled("volunteerSecurity038", !occupied038);		
-		model.setEnabled("volunteerIT038", !occupied038);		
+	//	model.setEnabled("volunteerKiosk038", !occupied038);
+	//	model.setEnabled("volunteerSecurity038", !occupied038);		
+	//	model.setEnabled("volunteerIT038", !occupied038);		
 	});
 		
 	// Children of at most 12 have a cheaper tourist package
 	model.addEffect(["birthYear"], function() {
-		if (model.getValue("birthYear") >= 2001) {
-		
-			$("#touristPrice").html("145 &euro;");
-			$("#wtcTicketPrice").html("10 &euro;");
+		if (model.getValue("birthYear") >= 2001) {		
+			$("#touristPrice").html("1000 SEK");
+			$("#wtcTicketPrice").html("50 SEK");
 		} else {
-			$("#touristPrice").html("155 &euro;");
-			$("#wtcTicketPrice").html("20 &euro;");
+			$("#touristPrice").html("1000 SEK");
+			$("#wtcTicketPrice").html("100 SEK");
 		}
 	});
 	
@@ -939,10 +938,10 @@ $(function () {
 		var value = model.getValue("package");		
 		var includesHotel = false;
 		switch (value) {
-		case "WTC Competitor": cost = 185; break;
-		case "Tourist": cost = (model.getValue("birthYear") >= 2001)?145:155; break;
-		case "Judge": cost = 115; break;
-		case "Staff": cost = 150; 
+		case "WTC Competitor": cost = 1400; break;
+		case "Tourist": cost = (model.getValue("birthYear") >= 2001)?1000:1000; break;
+		case "Judge": cost = 900; break;
+		case "Staff": cost = 900; 
 		includesHotel = true;
 		break;
 		case "Volunteer": cost = 0; break;
@@ -950,9 +949,12 @@ $(function () {
 		}
 		model.setValue("packageCost", cost);
 		model.setEnabled("diet", value != null && value != undefined);
-		model.setEnabled("hotel018",!includesHotel);
-		model.setEnabled("hotel028",!includesHotel);
-		model.setEnabled("hotel038",!includesHotel);
+		model.setEnabled("hotel38",!includesHotel);
+		model.setEnabled("hotel48",!includesHotel);
+		model.setEnabled("hotel58",!includesHotel);
+		model.setEnabled("hotel68",!includesHotel);
+		model.setEnabled("hotel78",!includesHotel);
+		model.setEnabled("hotel88",!includesHotel);
 	});
 	
 	// Add warnings about empty team members	
@@ -1109,23 +1111,22 @@ $(function () {
 	});
 	
 	model.addVariable("hotelCost");
-	model.addEffect(["hotel307", "hotel317", "hotel018", "hotel028", "hotel038", "hotel048", "roomType", "package"], function() {
+	model.addEffect(["hotel38", "hotel48", "hotel58", "hotel68", "hotel78", "hotel88", "roomType", "package"], function() {
 		var type = model.getValue("roomType");
 		var pernight = 0;
 		switch (type) 
 		{
-			case "Standard Single": pernight = 95; break;
-			case "Standard Double": pernight = 50; break;
-			case "Superior": pernight = 70; break;
-			case "Junior Suite": pernight = 90; break;
+			case "Standard Single": pernight = 1300; break;
+			case "Standard Double": pernight = 2200; break;
+			case "Cabin": pernight = 2300; break;
 		}
 		var nights = 0;
-		nights += (model.getValue("hotel307") == "yes");
-		nights += (model.getValue("hotel018") == "yes");
-		nights += (model.getValue("hotel317") == "yes");
-		nights += (model.getValue("hotel028") == "yes");
-		nights += (model.getValue("hotel038") == "yes");
-		nights += (model.getValue("hotel048") == "yes");
+		nights += (model.getValue("hotel38") == "yes");
+		nights += (model.getValue("hotel48") == "yes");
+		nights += (model.getValue("hotel58") == "yes");
+		nights += (model.getValue("hotel68") == "yes");
+		nights += (model.getValue("hotel78") == "yes");
+		nights += (model.getValue("hotel88") == "yes");
 		
 		var hasStaff = model.getValue("package")=="Staff";
 		model.setEnabled("roomType", nights > 0);
@@ -1173,9 +1174,9 @@ $(function () {
 	model.addVariable("optionalsCost");
 	model.addEffect(["optionalBanquette", "optionalWTCticket", "ultimateSauna", "hikingTour", "helsinkiTourWednesday", "helsinkiTourThursday", "tallinTour", "porvooTour"], function() {
 		var cost = 0;
-		cost += (model.getValue("optionalBanquette") == "yes")?50:0;
+		cost += (model.getValue("optionalBanquette") == "yes")?550:0;
 		if (model.getValue("optionalWTCticket") == "yes") {
-			cost += (model.getValue("birthYear") >= 2001)?10:20;
+			cost += (model.getValue("birthYear") >= 2001)?50:50;
 		}
 		cost += (model.getValue("ultimateSauna") == "yes")?35:0;
 		cost += (model.getValue("hikingTour") == "yes")?70:0;

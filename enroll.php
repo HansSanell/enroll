@@ -21,10 +21,10 @@
 			</li>
 			<li>
 				<a href="#" data-target="packagesPage">Packages</a>
-				<div class="summaryCost"><div class="variableObserver" data-variable="packageCost">0</div> &euro;</div>
+				<div class="summaryCost"><div class="variableObserver" data-variable="packageCost">0</div> SEK</div>
 			</li>
 			<li id="ifgNavi"><a href="#" data-target="ifgEventsPage">IFG</a>
-				<div class="summaryCost">+ <div class="variableObserver" data-variable="ifgCost">0</div> &euro;</div>
+				<div class="summaryCost">+ <div class="variableObserver" data-variable="ifgCost">0</div> SEK</div>
 			</li>
 			<li id="ifgTeamsNavi"><a href="#" data-target="ifgTeamsPage">IFG Teams</a>
 			</li>
@@ -33,13 +33,13 @@
 			<li><a href="#" data-target="volunteerPage">Volunteer</a>
 			</li>
 			<li><a href="#" data-target="hotelPage">Hotel</a>
-				<div class="summaryCost">+ <div class="variableObserver" data-variable="hotelCost">0</div> &euro;</div>
+				<div class="summaryCost">+ <div class="variableObserver" data-variable="hotelCost">0</div> SEK</div>
 			</li>
 			<li><a href="#" data-target="optionalPage">Optionals</a>
-				<div class="summaryCost">+ <div class="variableObserver" data-variable="optionalsCost">0</div> &euro;</div>			
+				<div class="summaryCost">+ <div class="variableObserver" data-variable="optionalsCost">0</div> SEK</div>			
 			</li>
 			<li><a href="#" data-target="summaryPage">Summary</a>
-				<div class="summaryCost">= <div class="variableObserver" data-variable="totalCost">0</div> &euro;</div>			
+				<div class="summaryCost">= <div class="variableObserver" data-variable="totalCost">0</div> SEK</div>			
 			</li>
 		</ul>
 		<div class="clearfloat"></div>
@@ -288,7 +288,7 @@
 					        Please enter your dietary restrictions.
 				        </div>
 			        </label>
-                    <?php echo $tshirts ?>
+                    <?php if($tshirts_included === True) { echo $tshirts; } ?>
 		        </div>
 	        </div><!-- packages page -->
 
@@ -715,50 +715,10 @@
 		        </p>
 			
 		        <div class="days">		
-			        <div class="day variable" data-variable="volunteerTatami307">
-				        <h2>Carrying tatamis Tue 30.7.</h2>
-				        Construction of 4 competition and warmup areas for seminars and International Friendship Games in Pasilan Urheiluhalli.
+			        <div class="day variable" data-variable="volunteer">
+				        <h2>Volunteering during the event</h2>
+					Volunteering to help out with different tasks during the event, will be made clear at a later point.
 			        </div>
-			
-			        <div class="day variable" data-variable="volunteerTatami028">
-				        <h2>Carrying tatamis Fri 2.8. evening</h2>
-				        Removing 2 of the 4 tatami areas and reorganizing the remaining tatamis for the World Championship Games.
-			        </div>
-			
-			        <div class="day variable" data-variable="volunteerTatami048">
-				        <h2>Carrying tatamis Sun 4.8.</h2>
-				        Removing 2 remaining tatami areas and moving them to storage in Pasilan Virastotalo.
-			        </div>
-			
-			        <div class="day variable" data-variable="volunteerKiosk018">
-				        <h2>Kiosk clerk Thu 1.8.</h2>
-				        Selling snacks, bewreges and event products.
-			        </div>
-			
-			        <div class="day variable" data-variable="volunteerKiosk028">
-				        <h2>Kiosk clerk Fri 2.8.</h2>
-				        Selling snacks, bewreges and event products.
-			        </div>
-			
-			        <div class="day variable" data-variable="volunteerKiosk038">
-				        <h2>Kiosk clerk Sat 3.8.</h2>
-				        Selling snacks, bewreges and event products.
-			        </div>			
-			
-			        <div class="day variable" data-variable="volunteerSecurity028">
-				        <h2>Security officer Fri 2.8.</h2>
-				        Lisence required.
-			        </div>			
-			
-			        <div class="day variable" data-variable="volunteerSecurity038">
-				        <h2>Security officer Sat 3.8.</h2>
-				        Lisence required.
-			        </div>			
-			
-			        <div class="day variable" data-variable="volunteerIT038">
-				        <h2>Technical help Sat 3.8.</h2>
-				        Video recording, computer operation, etc.
-			        </div>									
 			
 		        </div>
 		        <div class="clearfloat"></div>	
@@ -773,11 +733,10 @@
 			        Information about sightseeings and excursions are sent later. The exact costs for some of the services are determined after the number of participants is determined. 
 		        </p>
 			
-		        <div class="requireEnabled" data-variable="optionalBanquette">
+<!--		        <div class="requireEnabled" data-variable="optionalBanquette"> -->
 			        <h2>Events</h2>
 			        <div class="variable option" data-variable="optionalBanquette">
-                        <?php echo $banquette ?>
-
+                        		<?php echo $banquette ?>
 			        </div>
 
 			        <div class="variable option" data-variable="optionalWTCticket">
@@ -787,9 +746,9 @@
 			        </div>
 			
 			        <div class="clearfloat"></div>
-		        </div>
 
-		        <?php echo $sightseeing ?>
+<!--		        </div> -->
+		        <?php if($sightseeing_included === True) { echo $sightseeing; } ?>
 
 	        </div>
 
@@ -857,7 +816,7 @@
 			        <h2>Package</h2>
 			
 			        <div class="varSummary">			
-				        <div class="costSummary"><div class="variableObserver" data-variable="packageCost">0</div> &euro;</div>
+				        <div class="costSummary"><div class="variableObserver" data-variable="packageCost">0</div> SEK</div>
 				        <span class="title">Package</span>
 				        <div class="requireValue" data-variable="package" data-value="null">No package selected.</div>
 				        <div class="variableObserver" data-variable="package"></div>
@@ -872,7 +831,7 @@
 			
 				        <h2>Interantional Friendship Games events</h2>
 				        <div class="eventSummary">
-					        <div class="costSummary"><div class="variableObserver" data-variable="ifgCost">0</div> &euro;</div>
+					        <div class="costSummary"><div class="variableObserver" data-variable="ifgCost">0</div> SEK</div>
 					        <div class="requireValue" data-variable="eventB1" data-value="yes">
 						        <span>B1 Hokei, men  </span>
 					        </div>
@@ -1103,7 +1062,10 @@
 			        </div>
 			
 			        <h2>Volunteer</h2>
-				
+			        <div class="varSummary requireValue" data-variable="volunteer" data-value="yes">			
+				        <span>Volunteering during the event</span>
+			        </div>					
+<!--
 			        <div class="varSummary requireValue" data-variable="volunteerTatami307" data-value="yes">			
 				        <span>Carrying tatamis Tue 30.7.</span>
 			        </div>					
@@ -1139,7 +1101,7 @@
 			        <div class="varSummary requireValue" data-variable="volunteerIT038" data-value="yes">			
 				        <span>Technical help Sat 3.8.</span>
 			        </div>												
-			
+-->			
 			
 			        <h2>Hotel</h2>
 			        <?php echo $hotel_summary ?>
@@ -1155,23 +1117,23 @@
 			
 			        <div class="varSummary requireValue" data-variable="optionalBanquette">
 				        <span>Banquette</span>
-				        <div class="costSummary">50 &euro;</div>
+				        <div class="costSummary">0 SEK</div>
 			        </div>
 			
 			        <div class="varSummary requireValue" data-variable="optionalWTCticket">
 				        <span><?php echo $str_event_shorter ?> ticket</span>
-				        <div class="costSummary">20 &euro;</div>
+				        <div class="costSummary"> 0 SEK</div>
 			        </div>
-			        <?php echo $sightseeing_summary ?>
+			        <?php if($sightseeing_included === True) { echo $sightseeing_summary; } ?>
 
 			
 			        <div class="varSummary requireValue" data-variable="optionalsCost" data-value="0">
 				        <span class="title">No optional services</span>
-				        <div class="costSummary">0 &euro;</div>
+				        <div class="costSummary">0 SEK</div>
 			        </div>
 			
 			        <h2>
-				        <div class="costSummary"><div class="variableObserver" data-variable="totalCost">0</div> &euro;</div>
+				        <div class="costSummary"><div class="variableObserver" data-variable="totalCost">0</div> SEK</div>
 				        Total estimated cost				
 			        </h2>
 			
