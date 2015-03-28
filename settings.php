@@ -69,7 +69,7 @@ $volonteer_package = "<ol>
 									        <li>International Taido Seminar</li>
 									        <li>7 x Lunchboxes (All days) </li>
 								        </ol>";
-$volonteer_package_price = "0 &euro;";
+$volonteer_package_price = "0 SEK";
 $staff_package_include ="<ol>
 								        <li>Hotel accommodation in a 3 person room for 3 nights????</li>
 								        <li>International Taido Seminar</li>
@@ -78,6 +78,7 @@ $staff_package_include ="<ol>
 								        <li>Participation in Banquette (including Dinner)</li>
 							        </ol>";
 $staff_package_price ="900 SEK";
+$tshirts_included = False;
 $tshirts = '<label for="tshirt"><span class="title">T-shirt size</span>
 				        <select name="tshirt" id="tshirt" class="variable" data-variable="tshirt">
 					        <option value="110-120cm">110-120cm</option>
@@ -117,34 +118,34 @@ Please select which nights you want to spend at the hotel. The days correspond t
 							<li>WTF meeting</li>
 				        </ul>
 			        </div>
-			        <div class="hotelday variable" data-variable="hotel058">
+			        <div class="hotelday variable" data-variable="hotel58">
 				        <h2>Wednesday 5.8.</h2>
 				        <ul>
 					        <li>International Taido Seminar</li>
 					        <li>Shinsa</li>
 				        </ul>
 			        </div>
-			        <div class="hotelday variable" data-variable="hotel068">
+			        <div class="hotelday variable" data-variable="hotel68">
 				        <h2>Thursday 6.8.</h2>
 				        <ul>
 							<li>Judge seminar</li>
 							<li>International Taido Seminar</li>
 				        </ul>
 			        </div>
-			        <div class="hotelday variable" data-variable="hotel078">
+			        <div class="hotelday variable" data-variable="hotel78">
 				        <h2>Friday 7.8.</h2>
 				        <ul>
 					        <li>International Friendship Games</li>
 				        </ul>
 			        </div>
-					<div class="hotelday variable" data-variable="hotel088">
+					<div class="hotelday variable" data-variable="hotel88">
 				        <h2>Saturday 8.8.</h2>
 				        <ul>
 					        <li>European Taido Championship</li>
 							<li>Banquette</li>
 				        </ul>
 			        </div>
-			        <div class="hotelday variable" data-variable="hotel098">
+			        <div class="hotelday variable" data-variable="hotel98">
 				        <h2>Sunday 9.8.</h2>
 				        <ul>
 					        <li>Judge meeting</li>
@@ -152,8 +153,8 @@ Please select which nights you want to spend at the hotel. The days correspond t
 				        </ul>
 			        </div>
 		        </div>
-				Single room incl. breakfast & lunch: 1300 SEK/day
-		        <div class="clearfloat"></div>
+				
+		        <div class="clearfloat">Single room incl. breakfast & lunch: 1300 SEK/day</div>
 		        <div class="hotelDetails requireEnabled" data-variable="roomType">
 		        <h2>Room type</h2>
 			        <div class="roomtypes">
@@ -224,7 +225,7 @@ $banquette = '<div class="title">Banquette</div>
 				
 $hotel_summary ='<div class="hotelSummary requireValue" data-variable="hotelCost" data-value="!0">
 				        <div class="varSummary">
-					        <div class="costSummary"><div class="variableObserver" data-variable="hotelCost">0</div> &euro;</div>
+					        <div class="costSummary"><div class="variableObserver" data-variable="hotelCost">0</div> SEK</div>
 					        <span class="title">Nights</span>
 					        <div class="requireValue" data-variable="hotel38">Mon 3.8. </div>
 					        <div class="requireValue" data-variable="hotel48">Tue 4.8. </div>
@@ -265,7 +266,8 @@ $hotel_summary ='<div class="hotelSummary requireValue" data-variable="hotelCost
 				        </div>
 			        </div>';
 					
-//Not applicable						
+//Not applicable	
+$sightseeing_included = False;
 $sightseeing ='<h2>Sightseeing and excursions</h2>
 		        <div class="option variable" data-variable="ultimateSauna">
 			        <div class="title">Ultimate Sauna Experience</div>

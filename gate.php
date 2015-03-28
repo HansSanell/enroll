@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 
 <?php
@@ -8,7 +12,6 @@ else
 
 include 'settings.php';
 include 'database.php';
-session_start();
 
 if (array_key_exists("person", $_SESSION)) {
 	$person = $_SESSION["person"];
@@ -54,14 +57,14 @@ if (array_key_exists("page", $INDATA)) {
 			if ($person->manager >= 1) {
 				include 'manage.php';  
 			} else {
-				echo "You do not have permission to acces this page. Please contact " + $contact_email + ".";
+				echo "You do not have permission to access this page. Please contact " + $contact_email + ".";
 			}
 			break;
 		case "managereport":
 			if ($person->manager >= 1) {
 				include 'managereport.php';  
 			} else {
-				echo "You do not have permission to acces this page. Please contact " + $contact_email + ".";
+				echo "You do not have permission to access this page. Please contact " + $contact_email + ".";
 			}
 			break;
 		case "enroll":
