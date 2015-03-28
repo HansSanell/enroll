@@ -4,7 +4,7 @@
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.0.custom.min.js"></script>
 	<link href="css/jquery-ui-1.10.1.custom.css" rel="stylesheet" />
-	<script type="text/javascript" src="js/tee.js"></script>		
+	<script type="text/javascript" src="js/tee.js?v=2"></script>		
 	<link href="css/tee.css" rel="stylesheet" type="text/css" />
     
     <title><?php echo $str_event_short ?> Enrollment - Form</title>
