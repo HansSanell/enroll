@@ -58,6 +58,8 @@ You have been marked as a manager of ".$person->nationality." enrolments. You ca
 
 $msg .="
 
+Some problem can still persist since the adaptation of the system, for help or questions please contact ".$contact_email."
+
 If you did not receive this email on purpose, please contact ".$contact_email."
 
 Sincerely yours,

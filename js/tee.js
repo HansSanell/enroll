@@ -888,8 +888,10 @@ $(function () {
 	// Ensure judging is allowed only in specific situations
 	model.addEffect(["taidoRank", "ifgCost", "role", "package", "willComplete4dan"], function() {
 		var truth = (model.getValue("taidoRank") >= 1) && !(model.getValue("ifgCost") > 0) && !(model.getValue("role") == "staff") && !(model.getValue("package") == "Tourist") && !(model.getValue("package") == "Staff");
+		
 		model.setEnabled("ifgJudge", truth);
 		pages.setEnabled("judgePage", truth);
+		
 		truth &= (model.getValue("taidoRank") >= 4) || ((model.getValue("taidoRank") == 3) && (model.getValue("willComplete4dan") == "yes"));
 		truth &= (model.getValue("role") != "wtc");
 		model.setEnabled("wtcJudge", truth);
@@ -913,16 +915,11 @@ $(function () {
 	});
 	// Children of at most 12 have a cheaper tourist package
 	model.addEffect(["birthYear"], function() {
-		if (model.getValue("birthYear") >= 2001) {		
-			$("#touristPrice").html("1350 SEK");
-			$("#wtcTicketPrice").html("50 SEK");
-		} else {
-			$("#touristPrice").html("1350 SEK");
-			$("#wtcTicketPrice").html("100 SEK");
-		}
+	
+			$("#touristPrice").html("1450 SEK");
+	
 	});
 
-	
 
 	// Enabled events that the person is allowed to enroll
 	model.addEffect(["taidoRank", "sex", "birthYear", "package", "ifgJudge", "wtcJudge", "eventF19", "eventF20", "eventF21", "eventF22", "eventF23"], function() {	
@@ -935,6 +932,7 @@ $(function () {
 			(model.getValue("role") == "wtc") ||
 			(model.getValue("role") == "etc") ||
 			(model.getValue("package") == "WTC Competitor") ||
+			(model.getValue("package") == "Staff") ||
 			// Staffs are not allowed to compete in IFG
 			(model.getValue("role") == "staff") ||
 			// A judge is required to be IFG judge, and hence they can't participate in IFG.
@@ -984,12 +982,12 @@ $(function () {
 		var value = model.getValue("package");		
 		var includesHotel = true;
 		switch (value) {
-		case "WTC Competitor": cost = 1400; break;
-		case "Tourist": cost = 1350; break;
-		case "Judge": cost = 1150; break;
+		case "WTC Competitor": cost = 1600; break;
+		case "Tourist": cost = 1450; break;
+		case "Judge": cost = 1350; break;
 		case "Volunteer": cost = 0; break;
-        case "kids": cost = 400; break;
-		case "Staff": cost = 900; 
+        case "kids": cost = 450; break;
+		case "Staff": cost = 1000; 
 			includesHotel = true;
 			break;
 		default: cost = 0;
@@ -999,9 +997,9 @@ $(function () {
 		model.setEnabled("hotel38",includesHotel);
 		model.setEnabled("hotel48",includesHotel);
 		model.setEnabled("hotel58",includesHotel);
-		model.setEnabled("hotel68",value != "Staff");
-		model.setEnabled("hotel78",value != "Staff");
-		model.setEnabled("hotel88",value != "Staff");
+		model.setEnabled("hotel68",includesHotel);
+		model.setEnabled("hotel78",includesHotel);
+		model.setEnabled("hotel88",includesHotel);
 		model.setEnabled("hotel98",includesHotel);
 	});
 	
@@ -1145,8 +1143,7 @@ $(function () {
 	});
 	var judgeVariables = ["judgeNationalSeminars", "judgeInternationalSeminars", "judgeNationalCount", "judgeIFGCount", "judgeECCount", "judgeWCCount"];
 	model.addEffect(["wtcJudge", "ifgJudge", "nationality"], function() {	
-		if ((model.getValue("nationality") == "finnish") && 
-			(model.getValue("wtcJudge") == "yes" || model.getValue("ifgJudge") == "yes")) {
+		if ((model.getValue("wtcJudge") == "yes" || model.getValue("ifgJudge") == "yes")) {
 			$.each(judgeVariables, function() { model.setEnabled(this, true);});
 		} else {
 			$.each(judgeVariables, function() { model.setEnabled(this, false);});		
@@ -1164,9 +1161,9 @@ $(function () {
 		var pernight = 0;
 		switch (type) 
 		{
-			case "Standard Single": pernight = 1300; break;
-			case "Standard Double": pernight = 2200; break;
-			case "Cabin": pernight = 2300; break;
+			case "Standard Single": pernight = 1500; break;
+			case "Standard Double": pernight = 2400; break;
+			case "Cabin": pernight = 2500; break;
 		}
 		var nights = 0;
 		nights += (model.getValue("hotel38") == "yes");
@@ -1221,23 +1218,26 @@ $(function () {
 	});		
 	
 	model.addVariable("optionalsCost");
-	model.addEffect(["optionalBanquette", "optionalWTCticket", "optionalIFGticket", "optionalJudgeSeminars", "optionalSeminars", "optionalKidsSeminars", "optionalTshirt", "optionalHoodie"], function() {
+	model.addEffect(["optionalBanquette", "optionalWTCticket", "optionalIFGticket", "optionalJudgeSeminars", "optionalSeminars", "optionalKidsSeminars", "optionalTshirt", "optionalHoodie","optionalLunches"], function() {
 		var cost = 0;
 		cost += (model.getValue("optionalBanquette") == "yes")?600:0;
-		cost += (model.getValue("optionalWTCticket") == "yes")?100:0;
-		cost += (model.getValue("optionalIFGticket") == "yes")?50:0;
-		cost += (model.getValue("optionalJudgeSeminars") == "yes")?300:0;
-		cost += (model.getValue("optionalSeminars") == "yes")?400:0;
-		cost += (model.getValue("optionalKidsSeminars") == "yes")?250:0;
-		cost += (model.getValue("optionalTshirt") == "yes")?150:0;
-		cost += (model.getValue("optionalHoodie") == "yes")?350:0;
+		cost += (model.getValue("optionalWTCticket") == "yes")?120:0;
+		cost += (model.getValue("optionalIFGticket") == "yes")?75:0;
+		cost += (model.getValue("optionalJudgeSeminars") == "yes")?400:0;
+		cost += (model.getValue("optionalSeminars") == "yes")?500:0;
+		cost += (model.getValue("optionalKidsSeminars") == "yes")?300:0;
+		cost += (model.getValue("optionalTshirt") == "yes")?200:0;
+		cost += (model.getValue("optionalHoodie") == "yes")?400:0;
+		console.log(model.getValue("optionalLunches")) ;
 
+		cost += (model.getValue("optionalLunches") != "no")?model.getValue("optionalLunches") * 100:0;
+		
 		model.setValue("optionalsCost",cost);
 	});
 
 	// Add effects to calculate total cost
 	model.addVariable("totalCost");
-	model.addEffect(["packageCost", "ifgCost", "hotelCost", "optionalsCost"], function() {
+	model.addEffect(["packageCost", "hotelCost", "optionalsCost"], function() {
 		var cost = Number(model.getValue("packageCost"));
 		//cost += Number(model.getValue("ifgCost"));
 		cost += Number(model.getValue("hotelCost"));

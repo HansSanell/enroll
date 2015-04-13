@@ -183,6 +183,7 @@
 				        <option value="-5">5 kyu</option>
 				        <option value="-6">6 kyu</option>
 				        <option value="-7">7 kyu</option>
+						<option value="-8">Kids rank</option>
 				        <option value="none">don't practice</option>						
 			        </select>
 			        <div class="variableErrorMessage" data-variable="taidoRank">
@@ -199,6 +200,8 @@
 					
 			
 		        </label>
+				<div class="clearfloat"></div>
+				Disclaimer: For any questions or problem please contact <a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>
 <!--
 		        <label class="requireValue" data-variable="role" data-value="!null">
 			        <span class="title">Role</span>
@@ -215,6 +218,7 @@
 	        <div class="page" id="packagesPage">
 		        <div class="packages">
 				Seminars are inlcluded in all packages. No package? Choose individual events at the "Optionals" tab.
+				Lunches are included in the accommodation otherwise extra can be ordered under Optionals.
 				<div class="clearfloat"></div>
 			        <div class="requireValue" data-variable="role" data-value="wtc">
 				        <div class="package variable" id="wtcPackage" data-variable="package" data-value="WTC Competitor">
@@ -744,6 +748,17 @@
 			        Information about sightseeings and excursions are sent later. The exact costs for some of the services are determined after the number of participants is determined. 
 		        </p>
 			<?php if($tshirts_included === True) { echo $tshirts; } ?>
+			<div class="clearfloat"></div>
+					        <label for="lunches"><span class="title">Lunches (included in accommodation otherwise): </span>
+			        <select name="lunches" id="lunches" class="variable" data-variable="optionalLunches">
+				        <option value="no" selected>0</option>
+				        <option value="1">1</option>
+				        <option value="2">2</option>
+				        <option value="3">3</option>
+				        <option value="4">4</option>
+				        <option value="5">5</option>
+			        </select>
+					</label>
 			<!-- TODO: lunches-->
 <!--		        <div class="requireEnabled" data-variable="optionalBanquette"> -->
 			        <h2>Events</h2>
@@ -762,34 +777,33 @@
 			        <div class="variable option" data-variable="optionalIFGticket">
 				        <div class="title">ITFG ticket</div>
 				        <div class="contents">Spectator ticket to the ITFG</div>
-				        <div class="price" id="ifgTicketPrice">50 SEK</div>
+				        <div class="price" id="ifgTicketPrice">75 SEK</div>
 			        </div>
 			        <div class="variable option" data-variable="optionalJudgeSeminars">
 				        <div class="title">Judge Seminars</div>
 				        <div class="contents">Participation in the judge seminars</div>
-				        <div class="price" id="judgeSeminarsPrice">300 SEK</div>
+				        <div class="price" id="judgeSeminarsPrice">400 SEK</div>
 			        </div>
 			        <div class="variable option" data-variable="optionalSeminars">
 				        <div class="title">Taido Seminars</div>
 				        <div class="contents">Participation in the Taido Seminars</div>
-				        <div class="price" id="seminarsPrice">400 SEK</div>
+				        <div class="price" id="seminarsPrice">500 SEK</div>
 			        </div>
 			        <div class="variable option" data-variable="optionalKidsSeminars">
 				        <div class="title">Kids Seminars</div>
 				        <div class="contents">Participation in the Kids Taido Seminars</div>
-				        <div class="price" id="kidsSeminarsPrice">250 SEK</div>
+				        <div class="price" id="kidsSeminarsPrice">300 SEK</div>
 			        </div>
 			        <div class="variable option" data-variable="optionalTshirt">
 				        <div class="title">Tshirt</div>
 				        <div class="contents"></div>
-				        <div class="price" id="tshirtPrice">150 SEK</div>
+				        <div class="price" id="tshirtPrice">200 SEK</div>
 			        </div>
 			        <div class="variable option" data-variable="optionalHoodie">
 				        <div class="title">Hoodie</div>
 				        <div class="contents"></div>
-				        <div class="price" id="hoodiePrice">350 SEK</div>
+				        <div class="price" id="hoodiePrice">400 SEK</div>
 			        </div>
-			
 			        <div class="clearfloat"></div>
 
 <!--		        </div> -->
@@ -886,7 +900,7 @@
 			
 				        <h2>Interantional Friendship Games events</h2>
 				        <div class="eventSummary">
-					        <div class="costSummary"><div class="variableObserver" data-variable="ifgCost"></div></div>
+					        <div class="costSummary"></div><!-- <div class="variableObserver" data-variable="ifgCost"></div> -->
 					        <div class="requireValue" data-variable="eventF1" data-value="yes">
 						        <span>F1 Hokei, men  </span>
 					        </div>
@@ -1172,6 +1186,10 @@
 			        <div class="varSummary requireValue" data-variable="optionalHoodie">
 				        <span>Hoodie</span>
 				        <div class="variableObserver costSummary"> 400 SEK</div>
+			        </div>
+					<div class="varSummary requiredEnabled" data-variable="optionalLunches">
+				        <span>Extra lunches (if selected)</span>
+				        <div class="variableObserver costSummary"> 100 SEK/lunch</div>
 			        </div>
 			        <?php if($sightseeing_included === True) { echo $sightseeing_summary; } ?>
 

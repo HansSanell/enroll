@@ -406,7 +406,7 @@ case "submit":
 	
 	// Update event information and storable variables
 	$mysqli->query("DELETE FROM tee_variables WHERE personid=".$person->personid);
-	$storable = array("diet", "dojo", "ifgJudge", "judgeECCount", "judgeIFGCount", "judgeNationalCount","optionalIFGticket", "judgeNationalSeminars", "judgeInternationalSeminars", "judgeWCCount", "optionalBanquette", "optionalWTCticket", "separateBeds", "volunteer", "willComplete4dan", "wtcJudge","optionalSeminars","optionalJudgeSeminars","optionalKidsSeminars","optionalTshirt","optionalHoodie","infoOrganizer","tshirt");
+	$storable = array("diet", "dojo", "ifgJudge", "judgeECCount", "judgeIFGCount", "judgeNationalCount","optionalIFGticket", "judgeNationalSeminars", "judgeInternationalSeminars", "judgeWCCount", "optionalBanquette", "optionalWTCticket", "separateBeds", "volunteer", "willComplete4dan", "wtcJudge","optionalSeminars","optionalJudgeSeminars","optionalKidsSeminars","optionalTshirt","optionalHoodie","infoOrganizer","tshirt", "optionalLunches");
 	// Remove all IFG event enrollments
 	$mysqli->query("DELETE FROM tee_events WHERE personid=".$person->personid." AND event LIKE 'F%'");		
     $logfile = "tmp.txt";	

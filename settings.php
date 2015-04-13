@@ -37,8 +37,8 @@ $str_event_name = "European Taido Championships 2015";
 $str_event_name_exl_year = "European Taido Championship";
 $str_event_short = "ETC2015";
 $str_event_shorter = "ETC";
-$str_event_price ="100 SEK";
-$ifg_fee = "50 SEK";
+$str_event_price ="120 SEK";
+$ifg_fee = "75 SEK";
 $ifg_fee_participation = "350 SEK";
 $contact_email = "info@etc2015.se";
 $contact_name = "Swedish Taido Association";
@@ -57,6 +57,7 @@ $tourist_event_package_includes ="<ol>
 					<li>ITFG participation Ticket</li>
 				    <li>Participation in Banquette (including Dinner)</li>
 			</ol>";
+
 $tourist_event_package_price = "1450 SEK"; 
 $judge_event_package_include = "<ol>
 				<li>International Taido Judge Seminars</li>

@@ -42,6 +42,9 @@ include "settings.php";
             of <?php echo $str_event_short ?> and builds the corresponding teams.
 		</p>
 		<p>
+			Special thanks to the Finnish Taido Association for letting us take part of their enrollment system. <img src="images/Flag_of_Finland.png" alt="Finnish Flag" />
+		</p>
+		<p>
 			If you have any questions, please send email to <a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>.
 		</p>
 		

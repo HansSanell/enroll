@@ -25,7 +25,7 @@ while ($row = $result->fetch_object()) {
 
 	if ($row->event[0] == 'A') {
 		++$wtcEvents;
-	} elseif ($row->event[0] == 'B') {
+	} elseif ($row->event[0] == 'F') {
 		++$ifgEvents;
 	}
 }
@@ -92,11 +92,11 @@ Personal information
 			echo $person->package;
 		}
 		switch ($person->package) {
-		case "WTC Competitor": $totalCost += 1400; break;
-		case "Tourist": $totalCost += 1000; break;
-		case "Judge": $totalCost += 1150; break;
-		case "Staff": $totalCost += 900; break;
-		case "Kids": $totalCost += 400; break;
+		case "WTC Competitor": $totalCost += 1600; break;
+		case "Tourist": $totalCost += 1450; break;
+		case "Judge": $totalCost += 1350; break;
+		case "Staff": $totalCost += 1000; break;
+		case "Kids": $totalCost += 450; break;
 		}		
 		if (array_key_exists("diet", $variables)) { ?>
 
@@ -116,7 +116,8 @@ Personal information
 if ($ifgEvents) {?>
 International Friendship Games events
 <?
-$totalCost += 350;
+//ifg is included in the packages
+$totalCost += 0;
 if (in_array("F1", $events)) { echo "	F1 Hokei, men, >=2 kyu, tai or in hokei only \n"; }
 if (in_array("F2", $events)) { echo "	F2 Hokei, women, >=2 kyu, tai or in hokei only \n"; }
 if (in_array("F3", $events)) { echo "	F3 Jissen, men, <=1999, >=2 kyu\n"; }
@@ -226,10 +227,10 @@ Hotel
 	$accompany = true;
 	switch ($hotel->type) 
 	{
-		case "Standard Single": $totalCost += $payNights * 1300; $accompany = false; break;
-		case "Standard Double": $totalCost += $payNights * 2200; break;
+		case "Standard Single": $totalCost += $payNights * 1500; $accompany = false; break;
+		case "Standard Double": $totalCost += $payNights * 2400; break;
 		case "Superior": $totalCost += $payNights * 70; break;
-		case "Cabin": $totalCost += $payNights * 2300; break;
+		case "Cabin": $totalCost += $payNights * 2500; break;
 	}	
 	
 	echo substr($nights,0,-2); ?>
@@ -248,11 +249,12 @@ Hotel
 	
 	Information to the hotel    <? echo $hotel->additional; ?>
 	
-	Information to the organizer:   <?echo $variables["infoOrganizer"]; ?>
+	Information to the organizer:   <?echo $variables["infoOrganizer"]; ?> <br>
+	
 <?
 }
 
-$optionals = array("optionalBanquette", "optionalWTCticket", "optionalKidsSeminars", "optionalSeminars", "optionalJudgeSeminars", "optionalTshirt", "optionalHoodie", "optionalIFGticket");
+$optionals = array("optionalBanquette", "optionalWTCticket", "optionalKidsSeminars", "optionalSeminars", "optionalJudgeSeminars", "optionalTshirt", "optionalHoodie", "optionalIFGticket","optionalLunches");
 $hasOptionals = false;
 foreach ($optionals as $key) {
 	if (array_key_exists($key, $variables)) {
@@ -267,13 +269,14 @@ Optional services
 <?
 //add all other optionals
 if (array_key_exists("optionalBanquette",$variables) &&  $variables["optionalBanquette"]) { echo "	Banquette Sat 8.8.\n"; $totalCost += 600;}
-if (array_key_exists("optionalWTCticket",$variables) &&  $variables["optionalWTCticket"]) { echo "	ETC ticket Sat 8.8.\n"; $totalCost += 100;}
-if (array_key_exists("optionalIFGticket",$variables) &&  $variables["optionalIFGticket"]) { echo "	ITFG ticket Fri 7.8.\n"; $totalCost += 50;}
-if (array_key_exists("optionalJudgeSeminars",$variables) &&  $variables["optionalJudgeSeminars"]) { echo "	Judge seminars\n"; $totalCost += 300;}
-if (array_key_exists("optionalSeminars",$variables) &&  $variables["optionalSeminars"]) { echo "	Taido seminars\n"; $totalCost += 400;}
-if (array_key_exists("optionalKidsSeminars",$variables) &&  $variables["optionalKidsSeminars"]) { echo "	Kids Taido seminars\n"; $totalCost += 250;}
-if (array_key_exists("optionalTshirt",$variables) &&  $variables["optionalTshirt"]) { echo "	T-shirt\n"; $totalCost += 150;}
-if (array_key_exists("optionalHoodie",$variables) &&  $variables["optionalHoodie"]) { echo "	Hoodie\n"; $totalCost += 350;}
+if (array_key_exists("optionalWTCticket",$variables) &&  $variables["optionalWTCticket"]) { echo "	ETC ticket Sat 8.8.\n"; $totalCost += 120;}
+if (array_key_exists("optionalIFGticket",$variables) &&  $variables["optionalIFGticket"]) { echo "	ITFG ticket Fri 7.8.\n"; $totalCost += 75;}
+if (array_key_exists("optionalJudgeSeminars",$variables) &&  $variables["optionalJudgeSeminars"]) { echo "	Judge seminars\n"; $totalCost += 400;}
+if (array_key_exists("optionalSeminars",$variables) &&  $variables["optionalSeminars"]) { echo "	Taido seminars\n"; $totalCost += 500;}
+if (array_key_exists("optionalKidsSeminars",$variables) &&  $variables["optionalKidsSeminars"]) { echo "	Kids Taido seminars\n"; $totalCost += 300;}
+if (array_key_exists("optionalTshirt",$variables) &&  $variables["optionalTshirt"]) { echo "	T-shirt\n"; $totalCost += 200;}
+if (array_key_exists("optionalHoodie",$variables) &&  $variables["optionalHoodie"]) { echo "	Hoodie\n"; $totalCost += 400;}
+if (array_key_exists("optionalLunches",$variables) &&  $variables["optionalLunches"]) { echo "	Lunches: ".$variables["optionalLunches"]."*100\n"; $totalCost += $variables["optionalLunches"]*100;}
 }
 ?>
 
