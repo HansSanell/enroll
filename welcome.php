@@ -42,7 +42,7 @@ include "settings.php";
             of <?php echo $str_event_short ?> and builds the corresponding teams.
 		</p>
 		<p>
-			Special thanks to the Finnish Taido Association for letting us take part of their enrollment system. <img src="images/Flag_of_Finland.png" alt="Finnish Flag" />
+			Special thanks to the Finnish Taido Association for letting us adopt and adapt their enrollment system from WTC2013. <img src="images/Flag_of_Finland.png" alt="Finnish Flag" style="border: 1px solid #555555;" />
 		</p>
 		<p>
 			If you have any questions, please send email to <a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>.
