@@ -39,54 +39,59 @@ $str_event_short = "ETC2015";
 $str_event_shorter = "ETC";
 $str_event_price ="100 SEK";
 $ifg_fee = "50 SEK";
+$ifg_fee_participation = "350 SEK";
 $contact_email = "info@etc2015.se";
 $contact_name = "Swedish Taido Association";
 $enrollment_base_url = "http://www.etc2015.se/enroll/";
-$submission_deadline = "2015-05-1";
+$submission_deadline = "2015-05-17";
 //ETC compeditors
 $comp_event_package_includes = "<ol>
-	        <li>International Taido Seminar</li>
+	        <li>International Taido Seminars</li>
 	        <li>".$str_event_short." Participation Fee </li>
-	        <li>7 x Lunchboxes (All days) </li>
 	        <li>Participation in Banquette (including Dinner)</li>
         </ol>";
-$comp_package_price ="1400 SEK";
-$tourist_event_package_includes ="
-<ol>
-    <li>International Taido Seminar</li>
-    <li>".$str_event_short." Ticket</li>
-    <li>7 x Lunchboxes (All days) </li>
-    <li>Participation in Banquette (including Dinner)</li>
-</ol>";
-$tourist_event_package_price = "1000 SEK";
+$comp_package_price ="1600 SEK";
+$tourist_event_package_includes ="<ol>
+				    <li>International Taido Seminars</li>
+				    <li>".$str_event_short." Ticket</li>
+					<li>ITFG participation Ticket</li>
+				    <li>Participation in Banquette (including Dinner)</li>
+			</ol>";
+$tourist_event_package_price = "1450 SEK"; 
 $judge_event_package_include = "<ol>
-				<li>International Taido Seminar</li>
-				<li>7 x Lunchboxes (All days) </li>
+				<li>International Taido Judge Seminars</li>
+				<li>International Taido Seminars</li>
 				<li>Participation in Banquette (including Dinner)</li>
 			</ol>";
-$judge_event_package_price ="900 SEK";
+$judge_event_package_price ="1350 SEK";
 $volonteer_package = "<ol>
-									        <li>International Taido Seminar</li>
-									        <li>7 x Lunchboxes (All days) </li>
+										<li>Volonteer tshirt</li>
+										<li>Participation in Banquette (including Dinner)</li>
 								        </ol>";
 $volonteer_package_price = "0 SEK";
 $staff_package_include ="<ol>
-								        <li>Hotel accommodation in a 3 person room for 3 nights????</li>
-								        <li>International Taido Seminar</li>
-								        <li>Staff T-shirt????</li>
-								        <li>7 x Lunchboxes (All days) </li>
+								        <li>Accomodation discount</li>
+								        <li>International Taido Seminars</li>
+										<li>T-shirt</li>
 								        <li>Participation in Banquette (including Dinner)</li>
 							        </ol>";
-$staff_package_price ="900 SEK";
-$tshirts_included = False;
-$tshirts = '<label for="tshirt"><span class="title">T-shirt size</span>
+$staff_package_price ="1000 SEK";
+$kids_package_include ="<ol>
+									<li>Kids Taido Seminars (Tue + Wen)</li>
+									<li>".$str_event_short." Ticket</li>
+									<li>ITFG kids participation</li>
+								</ol>";
+$kids_package_price ="450 SEK";
+$tshirts_included = True;
+$tshirts = '<label for="tshirt"><span class="title">T-shirt size: </span>
 				        <select name="tshirt" id="tshirt" class="variable" data-variable="tshirt">
+					        <option value="none" selected>No thanks</option>
 					        <option value="110-120cm">110-120cm</option>
 					        <option value="130-140cm">130-140cm</option>
 					        <option value="150-160cm">150-160cm</option>
 					        <option value="XS">XS</option>
 					        <option value="S">S</option>
-					        <option value="M" selected>M</option>
+					        <option value="M">M</option>
 					        <option value="L">L</option>
 					        <option value="XL">XL</option>
 					        <option value="XXL">XXL</option>
@@ -96,14 +101,13 @@ $tshirts = '<label for="tshirt"><span class="title">T-shirt size</span>
 $hotel_page = '<div class="page hotel" id="hotelPage">
 		        <h1>TanumStrand</h1>
 		        <p>
-Some nice things to say about TanumStrand
+More to read can be found at: <a href="http://www.tanumstrand.se/uk" target="_blank">TanumStrand</a> or <a href="http://www.vastsverige.com/en/Experience-Fjallbacka/Articles/Articles---English/Grebbestad/" target="_blank">Grebbestad</a>
 		        </p>
 		        <p>
-Some more stuff about the hotel
 		        </p>
 		        <h2>Nights</h2>
 		        <p>
-Please select which nights you want to spend at the hotel. The days correspond to the start of the night at the hotel. For example, Tuesday 4.8. means the night between 4.8. and 5.8.
+Please select which nights you want to spend at the hotel. The days correspond to the start of the night at the hotel. For example, Tuesday 4.8. means the night between 4.8. and 5.8. If the selected package includes accomodation those days will not be shown here. 
 		        </p>
 		        <div class="days">
 			        <div class="hotelday variable" data-variable="hotel38">
@@ -145,37 +149,38 @@ Please select which nights you want to spend at the hotel. The days correspond t
 							<li>Banquette</li>
 				        </ul>
 			        </div>
-			        <div class="hotelday variable" data-variable="hotel98">
+				<div class="clearfloat">
 				        <h2>Sunday 9.8.</h2>
-				        <ul>
-					        <li>Judge meeting</li>
-							<li>Departure</li>
-				        </ul>
-			        </div>
+					   Judge meeting<br>
+					   Departure
+				</div>
+			        
 		        </div>
 				
-		        <div class="clearfloat">Single room incl. breakfast & lunch: 1300 SEK/day</div>
+
 		        <div class="hotelDetails requireEnabled" data-variable="roomType">
 		        <h2>Room type</h2>
+		        <div class="clearfloat">All rooms includes breakfast and lunch</div>
+			<div class="clearfloat">The cabin includes final cleaning if booked for the whole week, cabin price per night is based on all 6 beds taken in total</div>
 			        <div class="roomtypes">
 				        <div class="roomtype variable" data-variable="roomType" data-value="Standard Single">
-					        <div class="title">Standard Single incl. breakfast and lunch</div>
+					        <div class="title">Standard Single</div>
 					        <ul>
-						        <li>Cost: 1300 SEK/person/night</li>
+						        <li>Cost: 1500 SEK/night</li>
 						        <li>Fits: 1 person</li>
 					        </ul>
 				        </div>
 				        <div class="roomtype variable" data-variable="roomType" data-value="Standard Double">
-					        <div class="title">Standard Double incl. breakfast and lunch</div>
+					        <div class="title">Standard Double</div>
 					        <ul>
-						        <li>Cost: 2200 SEK/person/night</li>
+						        <li>Cost: 2400 SEK/night</li>
 						        <li>Fits: 2 persons</li>
 					        </ul>
 				        </div>
 				        <div class="roomtype variable" data-variable="roomType" data-value="Cabin">
-					        <div class="title">6 bed cabin incl. breakfast, lunch and cleaning (after checkout)</div>
+					        <div class="title">6 bed cabin</div>
 					        <ul>
-						        <li>Cost: 13800 SEK for the week (2300 SEK/person for the week for a full cabin)</li>
+						        <li>Cost: 2500 SEK/night</li>
 						        <li>Fits: 6 persons</li>
 					        </ul>
 				        </div>
@@ -187,14 +192,7 @@ Please select which nights you want to spend at the hotel. The days correspond t
 		        </div>
 		        <div class="hotelDetails requireEnabled" data-variable="passportNumber">
 			        <h2>Additional required information</h2>
-			        <div class="hotelDetail requireEnabled" data-variable="hotelAccompany">
-				        <span>Request for room mate</span>
-				        <input type="text" class="variable" data-variable="hotelAccompany" />
-			        </div>
-			        <div class="hotelDetail requireEnabled" data-variable="separateBeds">
-				        <span>&nbsp;</span>
-				        <div class="variable" data-variable="separateBeds">Separate beds?</div>
-			        </div>
+
 			        <div class="hotelDetail">
 				        <span>Full home address</span>
 				        <textarea name="address" rows="4" cols="50" class="variable" data-variable="address"></textarea>
@@ -210,16 +208,21 @@ Please select which nights you want to spend at the hotel. The days correspond t
 				        </div>
 			        </div>
 			        <div class="hotelDetail">
-				        <span>Additional information</span>
+				        <span>Additional information to the hotel</span>
 				        <textarea name="hotelAdditional" rows="4" cols="50" class="variable" data-variable="hotelAdditional"></textarea>
+			        </div>
+			        <div class="hotelDetail requireEnabled" data-variable="hotelAccompany">
+				        <span>Request for room mate(s)</span>
+				        <textarea name="address" rows="4" cols="50" class="variable" data-variable="hotelAccompany" ></textarea>
+			        </div>
+			        <div class="hotelDetail requireEnabled" data-variable="separateBeds">
+				        <span>&nbsp;</span>
+				        <div class="variable" data-variable="separateBeds">Separate beds?</div>
 			        </div>
 		        </div>
 	        </div>	<!-- accommodation page -->
     ';
 	
-$banquette = '<div class="title">Banquette</div>
-				        <div class="contents">Arranged 8rd of August in TanumStrand?? </div>
-				        <div class="price">550 SEK</div>';
 
 
 				

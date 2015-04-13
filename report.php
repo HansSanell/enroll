@@ -55,7 +55,7 @@ Personal information
 	
 	Taido rank					<? 
 	if ($person->taidoRank < 0)
-		echo (-$person->taidoRank).' kyu';
+		echo abs(($person->taidoRank)).' kyu';
 	elseif ($person->taidoRank > 0)
 		echo $person->taidoRank . ' dan';
 	else
@@ -64,9 +64,17 @@ Personal information
 	
 	Renshi						Yes<?
 	}
+	if (in_array("kyoshi", $events)) { ?>
+	
+	Kyoshi						Yes<?
+	}
+	if (in_array("hanshi", $events)) { ?>
+	
+	Hanshi						Yes<?
+	}
 	if (in_array("wtcCompetitor", $events)) { ?>
 	
-	Role						WTC Competitor<?
+	Role						ETC Competitor<?
 	}
 	if (in_array("staff", $events)) { ?>
 	
@@ -78,12 +86,17 @@ Personal information
 	if (strlen($person->package) < 1) {
 		echo "none";
 	} else {
-		echo $person->package;
+		if ($person->package == "WTC Competitor") {
+			echo "ETC Competitor";
+		} else {
+			echo $person->package;
+		}
 		switch ($person->package) {
-		case "WTC Competitor": $totalCost += 185; break;
-		case "Tourist": $totalCost += ($person->birthYear >= 2001)?145:155; break;
-		case "Judge": $totalCost += 115; break;
-		case "Staff": $totalCost += 150; break;
+		case "WTC Competitor": $totalCost += 1400; break;
+		case "Tourist": $totalCost += 1000; break;
+		case "Judge": $totalCost += 1150; break;
+		case "Staff": $totalCost += 900; break;
+		case "Kids": $totalCost += 400; break;
 		}		
 		if (array_key_exists("diet", $variables)) { ?>
 
@@ -103,43 +116,43 @@ Personal information
 if ($ifgEvents) {?>
 International Friendship Games events
 <?
-$totalCost += 30;
-if (in_array("B1", $events)) { echo "	B1 Hokei, men, <=1997, >=2 kyu, tai or in hokei only \n"; }
-if (in_array("B2", $events)) { echo "	B2 Hokei, women, <=1997, >=2 kyu, tai or in hokei only \n"; }
-if (in_array("B3", $events)) { echo "	B3 Jissen, men, <=1995, >=2 kyu\n"; }
-if (in_array("B4", $events)) { echo "	B4 Jissen, women, <=1995, >=2 kyu\n"; }
-if (in_array("B5", $events)) { echo "	B5 Hokei, men, <=1997, 6-3 kyu, tai or in hokei: only sen, un, hen \n"; }
-if (in_array("B6", $events)) { echo "	B6 Hokei, women, <=1997, 6-3 kyu, tai or in hokei: only sen, un, hen \n"; }
-if (in_array("B7", $events)) { echo "	B7 Jissen, men, <=1995, 6-3 kyu\n"; }
-if (in_array("B8", $events)) { echo "	B8 Jissen, women, <=1995, 6-3 kyu \n"; }
-if (in_array("B9", $events)) { echo "	B9 Sonen hokei, mixed, <=1978, >=6 kyu, tai, in or sei hokei only \n"; }
-if (in_array("B10", $events)) { echo "	B10 Sonen hokei, mixed, <=1978, >=6 kyu, mei hokei only \n"; }
-if (in_array("B11", $events)) { echo "	B11 Sonen jissen, men, <=1978, >=2 kyu\n"; }
-if (in_array("B12", $events)) { echo "	B12 Sonen jissen, women, <=1978, >=2 kyu\n"; }
-if (in_array("B13", $events)) { echo "	B13 Junior hokei, mixed, >=2001, no belt limitation, tai or in hokei: only sen, un, hen \n"; }
-if (in_array("B14", $events)) { echo "	B14 Junior hokei, mixed, 1998-2000, no belt limitation, tai or in hokei: only sen, un, hen\n"; }
-if (in_array("B15", $events)) { echo "	B15 Jissen, boys, 1999-2001, >=6 kyu, tai or in hokei: only sen, un, hen\n"; }
-if (in_array("B16", $events)) { echo "	B16 Jissen, girls, 1999-2001, >=6 kyu, tai or in hokei: only sen, un, hen\n"; }
-if (in_array("B17", $events)) { echo "	B17 Jissen, boys, 1996-1998, >=6 kyu\n"; }
-if (in_array("B18", $events)) { echo "	B18 Jissen, girls, 1996-1998, >=6 kyu\n"; }
-if (in_array("B19", $events)) { echo "	B19 Dantai hokei, mixed, <=2003, no belt limitation, team: 5 competitors, tai or in hokei only\n"; }
-if (in_array("B20", $events)) { echo "	B20 Dantai jissen, men, <=1995, >= 2 kyu, team: 5 competitors and leader\n"; }
-if (in_array("B21", $events)) { echo "	B21 Dantai jissen, women, <=1995, >= 2 kyu, team: 5 competitors and leader\n"; }
-if (in_array("B22", $events)) { echo "	B22 Tenkai, mixed, <=2003, no belt limitation, team: 6 competitors \n"; }
-if (in_array("B23", $events)) { echo "	B23 Taido trick-track for Juniors, >=2001, no belt limitation, rules and directions will be given later\n"; }
+$totalCost += 350;
+if (in_array("F1", $events)) { echo "	F1 Hokei, men, >=2 kyu, tai or in hokei only \n"; }
+if (in_array("F2", $events)) { echo "	F2 Hokei, women, >=2 kyu, tai or in hokei only \n"; }
+if (in_array("F3", $events)) { echo "	F3 Jissen, men, <=1999, >=2 kyu\n"; }
+if (in_array("F4", $events)) { echo "	F4 Jissen, women, <=1999, >=2 kyu\n"; }
+if (in_array("F5", $events)) { echo "	F5 Hokei, men, <=1999, 6-3 kyu, tai or in hokei: only sen, un, hen \n"; }
+if (in_array("F6", $events)) { echo "	F6 Hokei, women, <=1999, 6-3 kyu, tai or in hokei: only sen, un, hen \n"; }
+if (in_array("F7", $events)) { echo "	F7 Jissen, men, <=1999, 6-3 kyu\n"; }
+if (in_array("F8", $events)) { echo "	F8 Jissen, women, <=1999, 6-3 kyu \n"; }
+if (in_array("F9", $events)) { echo "	F9 Kids hokei, mixed, 2006-2008, no belt limitation, Own created mini-hokei \n"; }
+if (in_array("F10", $events)) { echo "	F10  Kids hokei, mixed, 2003-2005, no belt limitation, Own created mini-hokei \n"; }
+if (in_array("F11", $events)) { echo "	F11 Kids jissen, boys, 2003-2005, no belt limitation \n"; }
+if (in_array("F12", $events)) { echo "	F12 Kids jissen, girls, 2003-2005, no belt limitation \n"; }
+if (in_array("F13", $events)) { echo "	F13 Junior hokei, mixed, 2000-2002, no belt limitation, tai or in hokei only\n"; }
+if (in_array("F14", $events)) { echo "	F14 Junior Jissen, boys, 2000-2002, >=6 kyu \n"; }
+if (in_array("F15", $events)) { echo "	F15 Junior Jissen, girls, 2000-2002, >=6 kyu \n"; }
+if (in_array("F16", $events)) { echo "	F16 Sonnen Hokei, mix, <=1980, 6-3 kyu \n"; }
+if (in_array("F17", $events)) { echo "	F17 Sonnen Hokei, mix, <=1980, >=2 kyu \n"; }
+if (in_array("F18", $events)) { echo "	F18 Sonnen Jissen, men, <=1980, >=2 kyu \n"; }
+if (in_array("F19", $events)) { echo "	F19 Sonnen Jissen, women, <=1980, >=2 kyu \n"; }
+if (in_array("F20", $events)) { echo "	F20 Dantai hokei, mixed, <=2003, no belt limitation, team: 5 competitors, tai or in hokei only\n"; }
+if (in_array("F21", $events)) { echo "	F21 Dantai jissen, men, <=1995, >= 2 kyu, team: 5 competitors and leader\n"; }
+if (in_array("F22", $events)) { echo "	F22 Dantai jissen, women, <=1995, >= 2 kyu, team: 5 competitors and leader\n"; }
+if (in_array("F23", $events)) { echo "	F23 Tenkai, mixed, <=2003, no belt limitation, team: 6 competitors \n"; }
 echo "\n";
 $teamsResult = $mysqli->query("SELECT * FROM tee_teams JOIN tee_players WHERE tee_players.teamid=tee_teams.teamid AND tee_players.personid=".$person->personid) or die($mysqli->error);
 if ($teamsResult->num_rows) {
 ?>
 International Friendship Games teams
 <?
-	$teamEvents = array("B19", "B20", "B21", "B22");
+	$teamEvents = array( "F20", "F21", "F22", "F23");
 	while ($team = $teamsResult->fetch_object()) {
 		switch ($team->event) {
-		case "B19": echo "\tB19 Dantai hokei"; break;
-		case "B20": echo "\tB20 Dantai jissen, men"; break;
-		case "B21": echo "\tB21 Dantai jissen, women"; break;
-		case "B22": echo "\tB22 Tenkai"; break;		
+		case "F20": echo "\tF20 Dantai hokei"; break;
+		case "F21": echo "\tF21 Dantai jissen, men"; break;
+		case "F22": echo "\tF22 Dantai jissen, women"; break;
+		case "F23": echo "\tF23 Tenkai"; break;		
 		}	
 		echo ": ". $team->name ."\n";
 //		echo "\t". $team->name." (".$team->event .")\n";
@@ -166,7 +179,7 @@ if (array_key_exists("ifgJudge",$variables) && strcmp($variables["ifgJudge"],"ye
 	// Judge duty?>
 Judge
 	<? 
-		if (array_key_exists("wtcJudge",$variables)) echo "World Taido Championships, ";	//TODO: Substitute text!?
+		if (array_key_exists("wtcJudge",$variables)) echo "European Taido Championships, ";	//TODO: Substitute text!?
 		echo "International Friendship Games\n";?>
 	National seminars				<? echo $variables["judgeNationalSeminars"]; ?>	
 	International seminars			<? echo $variables["judgeInternationalSeminars"]; ?>	
@@ -190,15 +203,7 @@ if ($volunteerCount > 0) {
 ?>
 Volunteer
 <? 
-if (array_key_exists("volunteerTatami307",$variables) &&  $variables["volunteerTatami307"]) { echo "	Carrying tatamis Tue 30.7.\n";}
-if (array_key_exists("volunteerTatami028",$variables) &&  $variables["volunteerTatami028"]) { echo "	Carrying tatamis Fri 2.8. evening\n";}
-if (array_key_exists("volunteerTatami048",$variables) &&  $variables["volunteerTatami048"]) { echo "	Carrying tatamis Sun 4.8.\n";}
-if (array_key_exists("volunteerKiosk018",$variables) &&  $variables["volunteerKiosk018"]) { echo "	Kiosk clerk Thu 1.8.\n";}
-if (array_key_exists("volunteerKiosk028",$variables) &&  $variables["volunteerKiosk028"]) { echo "	Kiosk clerk Fri 2.8.\n";}
-if (array_key_exists("volunteerKiosk038",$variables) &&  $variables["volunteerKiosk038"]) { echo "	Kiosk clerk Sat 3.8.\n";}
-if (array_key_exists("volunteerSecurity028",$variables) &&  $variables["volunteerSecurity028"]) { echo "	Security officer Fri 2.8.\n";}
-if (array_key_exists("volunteerSecurity038",$variables) &&  $variables["volunteerSecurity038"]) { echo "	Security officer Sat 3.8.\n";}
-if (array_key_exists("volunteerIT038",$variables) &&  $variables["volunteerIT038"]) { echo "	Technical help Sat 3.8.\n";}
+if (array_key_exists("volunteer",$variables) &&  $variables["volunteer"]) { echo "	Volunteering during the events\n";}
 echo "\n";
 }
 
@@ -210,21 +215,21 @@ Hotel
 	$nights = "";
 	$nrnights = 0;
 	$isStaff = strcmp($person->package,"Staff") == 0;
-	if ($hotel->nights[0] == '1') { ++$nrnights; $nights .= "Tue 30.7., ";}
-	if ($hotel->nights[1] == '1') { ++$nrnights; $nights .= "Wed 31.7., ";}
-	if ($hotel->nights[2] == '1' || $isStaff) { ++$nrnights; $nights .= "Thu 1.8., ";}
-	if ($hotel->nights[3] == '1' || $isStaff) { ++$nrnights; $nights .= "Fri 2.8., ";}
-	if ($hotel->nights[4] == '1' || $isStaff) { ++$nrnights; $nights .= "Sat 3.8., ";}
-	if ($hotel->nights[5] == '1') { ++$nrnights; $nights .= "Sun 4.8., ";}
+	if ($hotel->nights[0] == '1') { ++$nrnights; $nights .= "Mon 3.8., ";}
+	if ($hotel->nights[1] == '1') { ++$nrnights; $nights .= "Tue 4.8., ";}
+	if ($hotel->nights[2] == '1' || $isStaff) { ++$nrnights; $nights .= "Wed 5.8., ";}
+	if ($hotel->nights[3] == '1' || $isStaff) { ++$nrnights; $nights .= "Thu 6.8., ";}
+	if ($hotel->nights[4] == '1' || $isStaff) { ++$nrnights; $nights .= "Fri 7.8., ";}
+	if ($hotel->nights[5] == '1') { ++$nrnights; $nights .= "Sat 8.8., ";}
 
 	$payNights = $nrnights - (($isStaff)?3:0);
 	$accompany = true;
 	switch ($hotel->type) 
 	{
-		case "Standard Single": $totalCost += $payNights * 95; $accompany = false; break;
-		case "Standard Double": $totalCost += $payNights * 50; break;
+		case "Standard Single": $totalCost += $payNights * 1300; $accompany = false; break;
+		case "Standard Double": $totalCost += $payNights * 2200; break;
 		case "Superior": $totalCost += $payNights * 70; break;
-		case "Junior Suite": $totalCost += $payNights * 90; break;
+		case "Cabin": $totalCost += $payNights * 2300; break;
 	}	
 	
 	echo substr($nights,0,-2); ?>
@@ -241,13 +246,13 @@ Hotel
 	
 	Passport number				<? echo $hotel->passportNumber; ?>
 	
-	Additional information			<? echo $hotel->additional; ?>
+	Information to the hotel    <? echo $hotel->additional; ?>
 	
-	
+	Information to the organizer:   <?echo $variables["infoOrganizer"]; ?>
 <?
 }
 
-$optionals = array("helsinkiTourThursday", "helsinkiTourWednesday", "hikingTour", "optionalBanquette", "optionalWTCticket", "porvooTour", "tallinTour", "ultimateSauna");
+$optionals = array("optionalBanquette", "optionalWTCticket", "optionalKidsSeminars", "optionalSeminars", "optionalJudgeSeminars", "optionalTshirt", "optionalHoodie", "optionalIFGticket");
 $hasOptionals = false;
 foreach ($optionals as $key) {
 	if (array_key_exists($key, $variables)) {
@@ -260,15 +265,16 @@ if ($hasOptionals) {
 ?>
 Optional services
 <?
-if (array_key_exists("optionalBanquette",$variables) &&  $variables["optionalBanquette"]) { echo "	Banquette Sat 3.8.\n"; $totalCost += 50;}
-if (array_key_exists("optionalWTCticket",$variables) &&  $variables["optionalWTCticket"]) { echo "	WTC ticket Sat 3.8.\n"; $totalCost += 20;}
-if (array_key_exists("ultimateSauna",$variables) &&  $variables["ultimateSauna"]) { echo "	Ultimate Sauna Experience Thu 1.8.\n"; $totalCost += 35;}
-if (array_key_exists("hikingTour",$variables) &&  $variables["hikingTour"]) { echo "	Hiking in Nuuksio Sun 5.8.\n"; $totalCost += 70;}
-if (array_key_exists("helsinkiTourWednesday",$variables) &&  $variables["helsinkiTourWednesday"]) { echo "	Sightseeing Helsinki Wed 30.7.\n"; $totalCost += 35;}
-if (array_key_exists("helsinkiTourThursday",$variables) &&  $variables["helsinkiTourThursday"]) { echo "	Sightseeing Helsinki Thu 1.8.\n"; $totalCost += 35;}
-if (array_key_exists("tallinTour",$variables) &&  $variables["tallinTour"]) { echo "	Day trip to Tallinn, Estonia\n"; $totalCost += 70;}
-if (array_key_exists("porvooTour",$variables) &&  $variables["porvooTour"]) { echo "	Sightseeing Porvoo 5.8.\n"; $totalCost += 70;}	
+//add all other optionals
+if (array_key_exists("optionalBanquette",$variables) &&  $variables["optionalBanquette"]) { echo "	Banquette Sat 8.8.\n"; $totalCost += 600;}
+if (array_key_exists("optionalWTCticket",$variables) &&  $variables["optionalWTCticket"]) { echo "	ETC ticket Sat 8.8.\n"; $totalCost += 100;}
+if (array_key_exists("optionalIFGticket",$variables) &&  $variables["optionalIFGticket"]) { echo "	ITFG ticket Fri 7.8.\n"; $totalCost += 50;}
+if (array_key_exists("optionalJudgeSeminars",$variables) &&  $variables["optionalJudgeSeminars"]) { echo "	Judge seminars\n"; $totalCost += 300;}
+if (array_key_exists("optionalSeminars",$variables) &&  $variables["optionalSeminars"]) { echo "	Taido seminars\n"; $totalCost += 400;}
+if (array_key_exists("optionalKidsSeminars",$variables) &&  $variables["optionalKidsSeminars"]) { echo "	Kids Taido seminars\n"; $totalCost += 250;}
+if (array_key_exists("optionalTshirt",$variables) &&  $variables["optionalTshirt"]) { echo "	T-shirt\n"; $totalCost += 150;}
+if (array_key_exists("optionalHoodie",$variables) &&  $variables["optionalHoodie"]) { echo "	Hoodie\n"; $totalCost += 350;}
 }
 ?>
 
-Total estimated cost				<? echo $totalCost;?> €
+Total estimated cost				<? echo $totalCost;?> SEK

@@ -4,8 +4,8 @@
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.0.custom.min.js"></script>
 	<link href="css/jquery-ui-1.10.1.custom.css" rel="stylesheet" />
-	<script type="text/javascript" src="js/tee.js?v=2"></script>		
-	<link href="css/tee.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/tee.js?v=3"></script>		
+	<link href="css/tee.css?v=2" rel="stylesheet" type="text/css" />
     
     <title><?php echo $str_event_short ?> Enrollment - Form</title>
 </head>
@@ -23,10 +23,10 @@
 				<a href="#" data-target="packagesPage">Packages</a>
 				<div class="summaryCost"><div class="variableObserver" data-variable="packageCost">0</div> SEK</div>
 			</li>
-			<li id="ifgNavi"><a href="#" data-target="ifgEventsPage">IFG</a>
-				<div class="summaryCost">+ <div class="variableObserver" data-variable="ifgCost">0</div> SEK</div>
+			<li id="ifgNavi"><a href="#" data-target="ifgEventsPage">ITFG</a>
+				<div class="summaryCost"><div class="variableObserver"></div></div> <!-- data-variable="ifgCost" -->
 			</li>
-			<li id="ifgTeamsNavi"><a href="#" data-target="ifgTeamsPage">IFG Teams</a>
+			<li id="ifgTeamsNavi"><a href="#" data-target="ifgTeamsPage">ITFG Teams</a>
 			</li>
 			<li id="judgeNavi"><a href="#" data-target="judgePage">Judges</a>
 			</li>
@@ -47,21 +47,20 @@
 	
     <form id="enrollForm" action="interface.php">
         <div class="pages">
+<!--
 	        <div class="page" id="loadingPage">
 		        <h1>Loading data...</h1>
 		        <p>
 			        <img src="images/ajax-loader.gif" alt="Loading" />
 		        </p>
 	        </div>
-
+-->
 	        <div class="page" id="personalPage">
 		        <h1>Personal information</h1>
 		
 		        <p>
-                    Please fill in your personal information. Competitors and staff of <?php echo $str_event_short ?> will see a field named "Role" with the corresponding role.
-                    If this is not the case, please contact your national representative.
+                    Please fill in your personal information. 
 		        </p>
-		
 		        <label for="nationality"><span class="title">Nationality</span></label>
                 <!-- TODO: Configure involved nationalities (or clubs?) -->
 			    <div class="variable flags" data-variable="nationality" data-value="australian">
@@ -101,10 +100,10 @@
 				    Please select one nationality.
 			    </div>			
 
-
+<!--
 		        <label for="email"><span class="title">Email address</span></label>
 			    <div class="variableObserver" data-variable="email"></div>		        
-
+-->
 		
 		        <label for="firstName"><span class="title">First (given) names</span></label>
 			    <input type="text" name="firstName" id="firstName" class="variable" data-variable="firstName" />
@@ -121,14 +120,14 @@
 		        </label>			
 
 		        <div class="requireEnabled" data-variable="firstNameGanji">
-			        <label for="firstNameGanji"><span class="title">First name in Ganji</span>
+			        <label for="firstNameGanji"><span class="title">First name in kanji</span>
 				        <input type="text" name="firstNameGanji" id="firstNameGanji" class="variable" data-variable="firstNameGanji" />
 				        <div class="variableErrorMessage" data-variable="firstNameGanji">
 					        Please enter at least one name.
 				        </div>
 			        </label>				
 			
-			        <label for="lastNameGanji"><span class="title">Last name in Ganji</span>
+			        <label for="lastNameGanji"><span class="title">Last name in kanji</span>
 				        <input type="text" name="lastNameGanji" id="lastNameGanji" class="variable" data-variable="lastNameGanji" />
 				        <div class="variableErrorMessage" data-variable="lastNameGanji">
 					        Please enter last name.
@@ -193,9 +192,14 @@
 		
 		        <label>
 			        <span class="title">&nbsp;</span>
-			        <div class="variable" id="renshi" data-variable="renshi">Renshi</div>
+					
+			        <div class="variable" id="renshi" data-variable="renshi">Renshi</div> 
+			        <div class="variable" id="kyoshi" data-variable="kyoshi">Kyoshi</div>
+			        <div class="variable" id="hanshi" data-variable="hanshi">Hanshi</div>
+					
+			
 		        </label>
-
+<!--
 		        <label class="requireValue" data-variable="role" data-value="!null">
 			        <span class="title">Role</span>
 			        <div class="requireValue" data-variable="role" data-value="wtc">
@@ -205,10 +209,13 @@
 			        Staff
 			        </div>
 		        </label>	
+-->
 	        </div> <!--- personal information page -->
 
 	        <div class="page" id="packagesPage">
 		        <div class="packages">
+				Seminars are inlcluded in all packages. No package? Choose individual events at the "Optionals" tab.
+				<div class="clearfloat"></div>
 			        <div class="requireValue" data-variable="role" data-value="wtc">
 				        <div class="package variable" id="wtcPackage" data-variable="package" data-value="WTC Competitor">
 					        <div class="title"><?php echo $str_event_short ?> Competitor package</div>
@@ -226,7 +233,7 @@
 			        <div class="requireValue" data-variable="role" data-value="!wtc">
 				        <div class="requireValue" data-variable="role" data-value="!staff">
 					        <div class="package variable" id="wtcPackage" data-variable="package" data-value="Tourist">
-						        <div class="title">Taido Tourist package</div>
+						        <div class="title">ITFG package</div>
 
 						        <div class="contents">
 							        Package includes
@@ -237,7 +244,7 @@
 					        </div>
 					        <div class="requireEnabled" data-variable="ifgJudge">
 						        <div class="package variable" id="wtcPackage" data-variable="package" data-value="Judge">
-							        <div class="title"><?php echo $str_event_short ?> Judge package</div>
+							        <div class="title">Judge package</div>
 
 							        <div class="contents">
 								        Package includes
@@ -247,25 +254,9 @@
 							        <div class="price"><?php echo $judge_event_package_price ?></div>
 						        </div>				
 					        </div>
-					
-					        <div class="requireValue" data-variable="nationality" data-value="finnish">
-
-						        <div class="package variable" id="volunteerPackage" data-variable="package" data-value="Volunteer">
-							        <div class="title">Volunteer package</div>
-
-							        <div class="contents">
-								        Package includes
-                                        <?php echo $volonteer_package?>
-
-							        </div>							
-							
-							        <div class="price"><?php echo $volonteer_package_price ?></div>
-						        </div>				
-					        </div>
-				        </div>
 				        <div class="requireValue" data-variable="role" data-value="staff">
 					        <div class="package variable" id="staffPackage" data-variable="package" data-value="Staff">
-						        <div class="title">Staff package</div>
+						        <div class="title">ITFG/ETC Staff package</div>
 
 						        <div class="contents">
 							        Package includes
@@ -277,9 +268,22 @@
 					        </div>				
 				        </div>				
 			        </div>
-			        <div class="clearfloat"></div>		
+			        
 		        </div>
-		
+				
+				<div class="variable" data-variable="kidspackage">
+					<div class="package variable" id="kidsPackage"  data-variable="package" data-value="kids">
+				        <div class="title">Kids package</div>
+				        <div class="contents">
+							Package includes
+        		            <?php echo $kids_package_include;?>
+						</div>							
+				        <div class="price"><?php echo $kids_package_price ?></div>
+				    </div>	
+				</div>
+			</div>
+				<div class="clearfloat"></div>		
+				<div class="variable requireEnabled" data-variable="manager">ETC National Team Manager</div>
 		        <div class="requireEnabled" data-variable="diet">
 		            <h2>Additional required information</h2>
 			        <label for="diet"><span class="title">Dietary restrictions</span>
@@ -288,29 +292,29 @@
 					        Please enter your dietary restrictions.
 				        </div>
 			        </label>
-                    <?php if($tshirts_included === True) { echo $tshirts; } ?>
+                    
 		        </div>
 	        </div><!-- packages page -->
 
 	        <div class="page" id="ifgEventsPage">
-		        <h1>International Friendship Games</h1>
+		        <h1>International Taido Friendship Games</h1>
 
 		        <h2>Rules and information</h2>
 
 		        <ol>
-			        <li>Pacticipation costs <?php echo $ifg_fee ?>.</li>
+			        <li>Participation costs <?php echo $ifg_fee_participation ?> unless part of package.</li>
 			        <li>Competitors have to be members of a national taido organization that belongs to the World Taido Federation.</li>					
 					
 			        <li>You only see events to which you are allowed to compete in.</li>					
-			        <li>If your taido rank is 2 kyu and your birth year is 1996-1997, you may apply the right to compete in events B3, B4, B20 and B21. The applications should be sent to the National Taido Organization.</li>
+			        <li>If your taido rank is 2 kyu and your birth year is 1996-1997, you may apply the right to compete in events F3, F4, F20 and F21. The applications should be sent to the National Taido Organization.</li>
 					
 			        <li>In case too many or too few competitors have applied to a specific event, the competition committee reserves the right to make alterations in the event compositions. Information about any changes will be sent through the national taido organizations.</li>
 					
-			        <li>Participants  of  the  <?php echo $str_event_name_exl_year ?>  (<?php echo $str_event_shorter?>)  are  not  allowed  to  participate  in  the International Friendship Games (IFG). </li>
+			        <li>Participants  of  the  <?php echo $str_event_name_exl_year ?>  (<?php echo $str_event_shorter?>)  are  not  allowed  to  participate  in  the International Taido Friendship Games (ITFG). </li>
 					
-			        <li>Before a person can be added to a dantai or tenkai team, he or she must have selected the corresponding IFG event and submitted his or her enrollment. This includes the people in reserve. </li>
+			        <li>Before a person can be added to a dantai or tenkai team, he or she must have selected the corresponding ITFG event and submitted his or her enrollment. This includes the people in reserve. </li>
 					
-			        <li>If a person only selects dantai or tenkai events and is only marked as a reserve, the participation fee of 30 euros will not be charged. The fee will show up in the enrollment system, but will not appear in the final bill.</li>
+			        <li>If a person only selects dantai or tenkai events and is only marked as a reserve, the participation fee of <?php echo $ifg_fee_participation ?> will not be charged. The fee will show up in the enrollment system, but will not appear in the final bill.</li>
 		        </ol>
 			
  
@@ -320,194 +324,201 @@
 				
 
 		        <h1>Events</h1>
-		        <div class="event variable" id="eventB1" data-variable="eventB1">
-			        <div class="code">B1</div>
+		        <div class="event variable" id="eventF1" data-variable="eventF1">
+			        <div class="code">F1</div>
 			        <div class="title">Hokei, men</div>
-			        <div class="year">&le; 1997</div>
+			        <div class="year"></div>
 			        <div class="rank">&ge; 2 kyu</div>
 			        <div class="note">tai or in hokei only</div>
 		        </div>
-		        <div class="event variable" id="eventB2" data-variable="eventB2">
-			        <div class="code">B2</div>
+		        <div class="event variable" id="eventF2" data-variable="eventF2">
+			        <div class="code">F2</div>
 			        <div class="title">Hokei, women</div>				
-			        <div class="year">&le; 1997</div>
+			        <div class="year"></div>
 			        <div class="rank">&ge; 2 kyu</div>
 			        <div class="note">tai or in hokei only</div>
 		        </div>
-		        <div class="event variable" id="eventB3" data-variable="eventB3">
-			        <div class="code">B3</div>
+		        <div class="event variable" id="eventF3" data-variable="eventF3">
+			        <div class="code">F3</div>
 			        <div class="title">Jissen, men</div>				
-			        <div class="year">&le; 1995</div>
+			        <div class="year">&le; 1999</div>
 			        <div class="rank">&ge; 2 kyu</div>
 		        </div>
-		        <div class="warning disabled" id="eventB3warning">
+		        <div class="warning disabled" id="eventF3warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B3 Jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of F3 Jissen, men should be born in 1999 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
-		        <div class="event variable" id="eventB4" data-variable="eventB4">
-			        <div class="code">B4</div>
+		        <div class="event variable" id="eventF4" data-variable="eventF4">
+			        <div class="code">F4</div>
 			        <div class="title">Jissen, women</div>				
-			        <div class="year">&le; 1995</div>
+			        <div class="year">&le; 1999</div>
 			        <div class="rank">&ge; 2 kyu</div>			
 		        </div>
-		        <div class="warning disabled" id="eventB4warning">
+		        <div class="warning disabled" id="eventF4warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B4 Jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of F4 Jissen, women should be born in 1999 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
-		        <div class="event variable" id="eventB5" data-variable="eventB5">
-			        <div class="code">B5</div>
+		        <div class="event variable" id="eventF5" data-variable="eventF5">
+			        <div class="code">F5</div>
 			        <div class="title">Hokei, men</div>				
-			        <div class="year">&le; 1997</div>
+			        <div class="year"></div>
 			        <div class="rank">6-3 kyu</div>
 			        <div class="note">tai or in hokei: only sen, un, hen</div>							
 		        </div>
-		        <div class="event variable" id="eventB6" data-variable="eventB6">
-			        <div class="code">B6</div>
+		        <div class="event variable" id="eventF6" data-variable="eventF6">
+			        <div class="code">F6</div>
 			        <div class="title">Hokei, women</div>				
-			        <div class="year">&le; 1997</div>
+			        <div class="year"></div>
 			        <div class="rank">6-3 kyu</div>
 			        <div class="note">tai or in hokei: only sen, un, hen</div>						
 		        </div>
-		        <div class="event variable" id="eventB7" data-variable="eventB7">
-			        <div class="code">B7</div>
+		        <div class="event variable" id="eventF7" data-variable="eventF7">
+			        <div class="code">F7</div>
 			        <div class="title">Jissen, men</div>				
-			        <div class="year">&le; 1995</div>
+			        <div class="year">&le; 1999</div>
 			        <div class="rank">6-3 kyu</div>			
 		        </div>
-		        <div class="warning disabled" id="eventB7warning">
+		        <div class="warning disabled" id="eventF7warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B7 Jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of F7 Jissen, men should be born in 1999 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>			
-		        <div class="event variable" id="eventB8" data-variable="eventB8">
-			        <div class="code">B8</div>
+		        <div class="event variable" id="eventF8" data-variable="eventF8">
+			        <div class="code">F8</div>
 			        <div class="title">Jissen, women</div>				
-			        <div class="year">&le; 1995</div>
+			        <div class="year">&le; 1999</div>
 			        <div class="rank">6-3 kyu</div>
 		        </div>
-		        <div class="warning disabled" id="eventB8warning">
+		        <div class="warning disabled" id="eventF8warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B8 Jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of F8 Jissen, women should be born in 1999 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>			
-		        <div class="event variable" id="eventB9" data-variable="eventB9">
-			        <div class="code">B9</div>
-			        <div class="title">Sonen hokei, mixed</div>				
-			        <div class="year">&le; 1978</div>
+		        <div class="event variable" id="eventF9" data-variable="eventF9">
+			        <div class="code">F9</div>
+			        <div class="title">Kids hokei, mixed</div>				
+			        <div class="year">2006-2008</div>
+			        <div class="rank">no belt limitation</div>
+			        <div class="note">Own created mini-hokei</div>				
+		        </div>			
+		        <div class="event variable" id="eventF10" data-variable="eventF10">
+			        <div class="code">F10</div>
+			        <div class="title">Kids hokei mix</div>				
+			        <div class="year">2003-2005</div>
+			        <div class="rank">no belt limitation</div>
+			        <div class="note">Own created mini-hokei</div>								
+		        </div>			
+		        <div class="event variable" id="eventF11" data-variable="eventF11">
+			        <div class="code">F11</div>
+			        <div class="title">Kids Jissen, boys</div>				
+			        <div class="year">2003-2005</div>
+			        <div class="rank"></div>
+		        </div>			
+		        <div class="event variable" id="eventF12" data-variable="eventF12">
+			        <div class="code">F12</div>
+			        <div class="title">Kids Jissen, girls</div>				
+			        <div class="year">2003-2005</div>
 			        <div class="rank">&ge; 6 kyu</div>
-			        <div class="note">tai, in or sei hokei only</div>				
 		        </div>			
-		        <div class="event variable" id="eventB10" data-variable="eventB10">
-			        <div class="code">B10</div>
-			        <div class="title">Sonen hokei, mixed</div>				
-			        <div class="year">&le; 1978</div>
+		        <div class="event variable" id="eventF13" data-variable="eventF13">
+			        <div class="code">F13</div>
+			        <div class="title">Junior hokei, mixed</div>				
+			        <div class="year">2000-2002</div>
+			        <div class="rank">no belt limitation</div>
+			        <div class="note">tai or in hokei only</div>				
+		        </div>			
+		        <div class="event variable" id="eventF14" data-variable="eventF14">
+			        <div class="code">F14</div>
+			        <div class="title">Junior Jissen, boys</div>				
+			        <div class="year">2000-2002</div>
 			        <div class="rank">&ge; 6 kyu</div>
-			        <div class="note">mei hokei only</div>				
+			        <div class="note"></div>				
 		        </div>			
-		        <div class="event variable" id="eventB11" data-variable="eventB11">
-			        <div class="code">B11</div>
+		        <div class="event variable" id="eventF15" data-variable="eventF15">
+			        <div class="code">F15</div>
+			        <div class="title">Junior Jissen, girls</div>				
+			        <div class="year">2000-2002</div>
+			        <div class="rank">&ge; 6 kyu</div>
+			        <div class="note"></div>				
+		        </div>
+		        <div class="event variable" id="eventF16" data-variable="eventF16">
+			        <div class="code">F16</div>
+			        <div class="title">Sonen hokei, mixed</div>				
+			        <div class="year">&le; 1980</div>
+			        <div class="rank">6-3 kyu</div>
+			        <div class="note"></div>				
+		        </div>			
+		        <div class="event variable" id="eventF17" data-variable="eventF17">
+			        <div class="code">F17</div>
+			        <div class="title">Sonen hokei, mixed</div>				
+			        <div class="year">&le; 1980</div>
+			        <div class="rank">&ge; 2 kyu</div>
+			        <div class="note"></div>				
+		        </div>			
+		        <div class="event variable" id="eventF18" data-variable="eventF18">
+			        <div class="code">F18</div>
 			        <div class="title">Sonen jissen, men</div>				
-			        <div class="year">&le; 1978</div>
+			        <div class="year">&le; 1980</div>
 			        <div class="rank">&ge; 2 kyu</div>
 		        </div>			
-		        <div class="event variable" id="eventB12" data-variable="eventB12">
-			        <div class="code">B12</div>
+		        <div class="event variable" id="eventF19" data-variable="eventF19">
+			        <div class="code">F19</div>
 			        <div class="title">Sonen jissen, women</div>				
-			        <div class="year">&le; 1978</div>
+			        <div class="year">&le; 1980</div>
 			        <div class="rank">&ge; 2 kyu</div>
 		        </div>						
-		        <div class="event variable" id="eventB3" data-variable="eventB13">
-			        <div class="code">B13</div>
-			        <div class="title">Junior hokei, mixed</div>				
-			        <div class="year">&ge; 2001</div>
-			        <div class="rank">no belt limitation</div>
-			        <div class="note">tai or in hokei: only sen, un, hen</div>				
-		        </div>			
-		        <div class="event variable" id="eventB14" data-variable="eventB14">
-			        <div class="code">B14</div>
-			        <div class="title">Junior hokei, mixed</div>				
-			        <div class="year">1998-2000</div>
-			        <div class="rank">no belt limitation</div>
-			        <div class="note">tai or in hokei: only sen, un, hen</div>				
-		        </div>			
-		        <div class="event variable" id="eventB15" data-variable="eventB15">
-			        <div class="code">B15</div>
-			        <div class="title">Jissen, boys</div>				
-			        <div class="year">1999-2001</div>
-			        <div class="rank">&ge; 6 kyu</div>
-			        <div class="note">tai or in hokei: only sen, un, hen</div>				
-		        </div>			
-		        <div class="event variable" id="eventB16" data-variable="eventB16">
-			        <div class="code">B16</div>
-			        <div class="title">Jissen, girls</div>				
-			        <div class="year">1999-2001</div>
-			        <div class="rank">&ge; 6 kyu</div>
-			        <div class="note">tai or in hokei: only sen, un, hen</div>				
-		        </div>
-		        <div class="event variable" id="eventB17" data-variable="eventB17">
-			        <div class="code">B17</div>
-			        <div class="title">Jissen, boys</div>				
-			        <div class="year">1996-1998</div>
-			        <div class="rank">&ge; 6 kyu</div>
-		        </div>			
-		        <div class="event variable" id="eventB18" data-variable="eventB18">
-			        <div class="code">B18</div>
-			        <div class="title">Jissen, girls</div>				
-			        <div class="year">1996-1998</div>
-			        <div class="rank">&ge; 6 kyu</div>
-		        </div>			
-		        <div class="event variable" id="eventB19" data-variable="eventB19">
-			        <div class="code">B19</div>
+		        <div class="event variable" id="eventF20" data-variable="eventF20">
+			        <div class="code">F20</div>
 			        <div class="title">Dantai hokei, mixed</div>				
-			        <div class="year">&le; 2003</div>
+			        <div class="year"></div>
 			        <div class="rank">no belt limitation</div>
 			        <div class="note">team: 5 competitors, tai or in hokei only</div>					
 		        </div>			
-		        <div class="event variable" id="eventB20" data-variable="eventB20">
-			        <div class="code">B20</div>
+		        <div class="event variable" id="eventF21" data-variable="eventF21">
+			        <div class="code">F21</div>
 			        <div class="title">Dantai jissen, men</div>				
-			        <div class="year">&le; 1995</div>
-			        <div class="rank">&ge; 2 kyu</div>
+			        <div class="year">&le; 1999</div>
+			        <div class="rank">&ge; 4 kyu</div>
 			        <div class="note">team: 5 competitors and leader</div>								
 		        </div>			
-		        <div class="warning disabled" id="eventB20warning">
+		        <div class="warning disabled" id="eventF21warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B20 Dantai jissen, men should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of F21 Dantai jissen, men should be born in 1999 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
 			
-		        <div class="event variable" id="eventB21" data-variable="eventB21">
-			        <div class="code">B21</div>
+		        <div class="event variable" id="eventF22" data-variable="eventF22">
+			        <div class="code">F22</div>
 			        <div class="title">Dantai jissen, women</div>				
-			        <div class="year">&le; 1995</div>
-			        <div class="rank">&ge; 2 kyu</div>
+			        <div class="year">&le; 1999</div>
+			        <div class="rank">&ge; 4 kyu</div>
 			        <div class="note">team: 5 competitors and leader</div>								
 		        </div>			
-		        <div class="warning disabled" id="eventB21warning">
+		        <div class="warning disabled" id="eventF22warning">
 			        <div class="title">Warning!</div>
-			        <div class="content">The competitors of B21 Dantai jissen, women should be born in 1995 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
+			        <div class="content">The competitors of F22 Dantai jissen, women should be born in 1999 or before. By enrolling to this event, you will request an exception to this rule and apply for the right to compete in this event. A letter of recommendation from your National Taido Organization is also required and it should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.</div>
 		        </div>
 			
-		        <div class="event variable" id="eventB22" data-variable="eventB22">
-			        <div class="code">B22</div>
+		        <div class="event variable" id="eventF23" data-variable="eventF23">
+			        <div class="code">F23</div>
 			        <div class="title">Tenkai, mixed</div>				
-			        <div class="year">&le; 2003</div>
+			        <div class="year"></div>
 			        <div class="rank">no belt limitation</div>
 			        <div class="note">team: 6 competitors</div>									
 		        </div>						
-		        <div class="event variable" id="eventB23" data-variable="eventB23">
-			        <div class="code">B23</div>
-			        <div class="title">Taido trick-track for Juniors</div>				
-			        <div class="year">&ge; 2001</div>
-			        <div class="rank">no belt limitation</div>
-			        <div class="note">rules and directions will be given later</div>								
-		        </div>			
+				<div class="event variable" id="eventF24" data-variable="eventF24">
+			        <div class="code">F24</div>
+			        <div class="title">ITFG spectator</div>				
+			        <div class="year"></div>
+			        <div class="rank"></div>
+			        <div class="note"></div>									
+		        </div>	
 			
 		        <div class="clearfloat"></div>
 	        </div><!-- international friendship games page -->
 
 	        <div class="page" id="ifgTeamsPage">
-		        <h1>IFG Team selection</h1>
+		        <h1>ITFG Team selection</h1>
 				
 		        <p>
-			        A team should consists of members (i.e., players and possibly a leader) from the same country, but teams with members from more than one country are also allowed. All teams must be full at submission deadline. However, if a dantai jissen player is not able to participate in IFG due to injury or similar and no substitution is available, the match for the absent player will be counted as a "default loss" and the team can participate in the event with four (4) competitors. Only teams with at least 3 players are allowed to compete.		
+			        A team should consists of members (i.e., players and possibly a leader) from the same country, but teams with members from more than one country are also allowed. All teams must be full at submission deadline. However, if a dantai jissen player is not able to participate in ITFG due to injury or similar and no substitution is available, the match for the absent player will be counted as a "default loss" and the team can participate in the event with four (4) competitors. Only teams with at least 3 players are allowed to compete.		
 		        </p>
 		        <p>
 			        To add a player, type in a part of their name and the system will search the database for that person. The system will return a list of people that have enrolled to the corresponding event and have submitted their enrollment. Therefore, you can only add people that will participate in the event. When you submit the team selections along with your enrollment, an email will be sent to each person you have selected in your team.
@@ -521,8 +532,8 @@
 		
 		
 		        <h1>Enrolled events</h1>
-		        <div class="dantai requireValue" data-variable="eventB19">
-			        <h2>B19 Dantai hokei, mixed</h2>
+		        <div class="dantai requireValue" data-variable="eventF20">
+			        <h2>F20 Dantai hokei, mixed</h2>
 				
 			        <label for="teamB19_name"><span class="title">Team name</span>
 				        <input type="text" name="teamB19_name" id="teamB19_name" class="variable" data-variable="teamB19_name" />
@@ -543,8 +554,8 @@
 				        <label><span class="title">Reserve 2</span><div class="variable selectPerson" data-variable="teamB19_r2"></div></label>
 			        </div>
 		        </div>
-		        <div class="dantai requireValue" data-variable="eventB20">
-			        <h2>B20 Dantai jissen, men</h2>
+		        <div class="dantai requireValue" data-variable="eventF21">
+			        <h2>F21 Dantai jissen, men</h2>
 				
 			        <label for="teamB20_name"><span class="title">Team name</span>
 				        <input type="text" name="teamB20_name" id="teamB20_name" class="variable" data-variable="teamB20_name" />
@@ -566,8 +577,8 @@
 				        <label><span class="title">Reserve 2</span><div class="variable selectPerson" data-variable="teamB20_r2"></div></label>
 			        </div>
 		        </div>
-		        <div class="dantai requireValue" data-variable="eventB21">
-			        <h2>B21 Dantai jissen, women</h2>
+		        <div class="dantai requireValue" data-variable="eventF22">
+			        <h2>F22 Dantai jissen, women</h2>
 				
 			        <label for="teamB21_name"><span class="title">Team name</span>
 				        <input type="text" name="teamB21_name" id="teamB21_name" class="variable" data-variable="teamB21_name" />
@@ -591,7 +602,7 @@
 		        </div>
 
 		        <div class="dantai requireValue" data-variable="eventB22">
-			        <h2>B22 Tenkai, mixed</h2>
+			        <h2>F23 Tenkai, mixed</h2>
 				
 			        <label for="teamB22_name"><span class="title">Team name</span>
 				        <input type="text" name="teamB22_name" id="teamB22_name" class="variable" data-variable="teamB22_name" />
@@ -622,13 +633,13 @@
 		
 		        <p>
 			        A judge in <?php echo $str_event_shorter ?> must have 4 dan and be experienced in judging. If you will complete 4 dan shinsa during the <?php echo $str_event_short?> event,
-			        you may enroll as a judge in <?php echo $str_event_shorter?>. A judge in IFG should also have 4 dan and be experienced in judging. However, if you have
-                    a recommendation from your national taido organization, you may apply the right to judge in the IFG event. 
+			        you may enroll as a judge in <?php echo $str_event_shorter?>. A judge in ITFG should also have 1 dan and be experienced in judging. However, if you have
+                    a recommendation from your national taido organization, you may apply the right to judge in the ITFG event. 
                     <?php echo $contact_name ?> and World Taido Federation will review all judge enrollments and decide if a person is qualified. 
 		        </p>
 		        <p>
 			        Enrollment as judge is binding. All judges who enroll to <?php echo $str_event_shorter ?> must enroll also
-			        IFG as judge. Competitors of <?php echo $str_event_shorter?> can enroll to judge in IFG, but cannot enroll as judges in <?php echo $str_event_shorter?>.
+			        ITFG as judge. Competitors of <?php echo $str_event_shorter?> can enroll to judge in ITFG, but cannot enroll as judges in <?php echo $str_event_shorter?>.
 		        </p>
 		
 		        <div class="requireValue" data-variable="taidoRank" data-value="3">
@@ -711,7 +722,7 @@
 		        <h1>Volunteering</h1>
 		
 		        <p>				 
-			        If you are willing to do some volunteer work, please select the dates and the tasks you are willing to participate in. Tasks that overlap with your previous selections, such as IFG games, are not shown.
+			        If you are willing to do some volunteer work, please select the dates and the tasks you are willing to participate in. Tasks that overlap with your previous selections, such as ITFG games, are not shown.
 		        </p>
 			
 		        <div class="days">		
@@ -732,17 +743,51 @@
 		        <p>
 			        Information about sightseeings and excursions are sent later. The exact costs for some of the services are determined after the number of participants is determined. 
 		        </p>
-			
+			<?php if($tshirts_included === True) { echo $tshirts; } ?>
+			<!-- TODO: lunches-->
 <!--		        <div class="requireEnabled" data-variable="optionalBanquette"> -->
 			        <h2>Events</h2>
 			        <div class="variable option" data-variable="optionalBanquette">
-                        		<?php echo $banquette ?>
+                        		<div class="title">Banquette</div>
+				        <div class="contents">Arranged 8th of August in TanumStrand</div>
+				        <div class="price">600 SEK</div>
 			        </div>
 
 			        <div class="variable option" data-variable="optionalWTCticket">
 				        <div class="title"><?php echo $str_event_shorter?> ticket</div>
-				        <div class="contents">&nbsp;</div>
+				        <div class="contents">Spectator ticket to the ETC</div>
 				        <div class="price" id="wtcTicketPrice"><?php echo $str_event_price ?></div>
+			        </div>
+
+			        <div class="variable option" data-variable="optionalIFGticket">
+				        <div class="title">ITFG ticket</div>
+				        <div class="contents">Spectator ticket to the ITFG</div>
+				        <div class="price" id="ifgTicketPrice">50 SEK</div>
+			        </div>
+			        <div class="variable option" data-variable="optionalJudgeSeminars">
+				        <div class="title">Judge Seminars</div>
+				        <div class="contents">Participation in the judge seminars</div>
+				        <div class="price" id="judgeSeminarsPrice">300 SEK</div>
+			        </div>
+			        <div class="variable option" data-variable="optionalSeminars">
+				        <div class="title">Taido Seminars</div>
+				        <div class="contents">Participation in the Taido Seminars</div>
+				        <div class="price" id="seminarsPrice">400 SEK</div>
+			        </div>
+			        <div class="variable option" data-variable="optionalKidsSeminars">
+				        <div class="title">Kids Seminars</div>
+				        <div class="contents">Participation in the Kids Taido Seminars</div>
+				        <div class="price" id="kidsSeminarsPrice">250 SEK</div>
+			        </div>
+			        <div class="variable option" data-variable="optionalTshirt">
+				        <div class="title">Tshirt</div>
+				        <div class="contents"></div>
+				        <div class="price" id="tshirtPrice">150 SEK</div>
+			        </div>
+			        <div class="variable option" data-variable="optionalHoodie">
+				        <div class="title">Hoodie</div>
+				        <div class="contents"></div>
+				        <div class="price" id="hoodiePrice">350 SEK</div>
 			        </div>
 			
 			        <div class="clearfloat"></div>
@@ -811,15 +856,25 @@
 				        <span class="title">Renshi</span>
 				        <div class="variableObserver" data-variable="renshi"></div>			
 			        </div>
+			        <div class="varSummary requireEnabled" data-variable="kyoshi">			
+				        <span class="title">Kyoshi</span>
+				        <div class="variableObserver" data-variable="kyoshi"></div>			
+			        </div>
+			        <div class="varSummary requireEnabled" data-variable="hanshi">			
+				        <span class="title">Hanshi</span>
+				        <div class="variableObserver" data-variable="hanshi"></div>			
+			        </div>
+
 
 			
 			        <h2>Package</h2>
 			
 			        <div class="varSummary">			
-				        <div class="costSummary"><div class="variableObserver" data-variable="packageCost">0</div> SEK</div>
-				        <span class="title">Package</span>
-				        <div class="requireValue" data-variable="package" data-value="null">No package selected.</div>
-				        <div class="variableObserver" data-variable="package"></div>
+				        <div class="costSummary"><div class="variableObserver requireEnabled" data-variable="packageCost">0</div> SEK</div>
+				        <span class="title">Package cost</span>
+						<div class="variableObserver" data-variable="package"></div>
+				        <div class="requireValue" data-variable="packageCost" data-value="0">No package selected.</div>
+			        
 			        </div>
 
 			        <div class="varSummary requireEnabled" data-variable="diet">			
@@ -831,86 +886,86 @@
 			
 				        <h2>Interantional Friendship Games events</h2>
 				        <div class="eventSummary">
-					        <div class="costSummary"><div class="variableObserver" data-variable="ifgCost">0</div> SEK</div>
-					        <div class="requireValue" data-variable="eventB1" data-value="yes">
-						        <span>B1 Hokei, men  </span>
+					        <div class="costSummary"><div class="variableObserver" data-variable="ifgCost"></div></div>
+					        <div class="requireValue" data-variable="eventF1" data-value="yes">
+						        <span>F1 Hokei, men  </span>
 					        </div>
-					        <div class="requireValue" data-variable="eventB2" data-value="yes">
-					         <span>B2 Hokei, women  </span>
+					        <div class="requireValue" data-variable="eventF2" data-value="yes">
+					         <span>F2 Hokei, women  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB3" data-value="yes">
-					         <span>B3 Jissen, men  </span>
+					        <div class="requireValue" data-variable="eventF3" data-value="yes">
+					         <span>F3 Jissen, men  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB4" data-value="yes">
-					         <span>B4 Jissen, women  </span>
+					        <div class="requireValue" data-variable="eventF4" data-value="yes">
+					         <span>F4 Jissen, women  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB5" data-value="yes">
-					         <span>B5 Hokei, men  </span>
+					        <div class="requireValue" data-variable="eventF5" data-value="yes">
+					         <span>F5 Hokei, men  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB6" data-value="yes">
-					         <span>B6 Hokei, women  </span>
+					        <div class="requireValue" data-variable="eventF6" data-value="yes">
+					         <span>F6 Hokei, women  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB7" data-value="yes">
-					         <span>B7 Jissen, men  </span>
+					        <div class="requireValue" data-variable="eventF7" data-value="yes">
+					         <span>F7 Jissen, men  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB8" data-value="yes">
-					         <span>B8 Jissen, women  </span>
+					        <div class="requireValue" data-variable="eventF8" data-value="yes">
+					         <span>F8 Jissen, women  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB9" data-value="yes">
-					         <span>B9 Sonen hokei, mixed  </span>
+					        <div class="requireValue" data-variable="eventF9" data-value="yes">
+					         <span>F9 Kids hokei, mixed </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB10" data-value="yes">
-					         <span>B10 Sonen hokei, mixed  </span>
+					        <div class="requireValue" data-variable="eventF10" data-value="yes">
+					         <span>F10 Kids hokei, mixed </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB11" data-value="yes">
-					         <span>B11 Sonen jissen, men  </span>
+					        <div class="requireValue" data-variable="eventF11" data-value="yes">
+					         <span>F11 Jissen, boys </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB12" data-value="yes">
-					         <span>B12 Sonen jissen, women  </span>
+					        <div class="requireValue" data-variable="eventF12" data-value="yes">
+					         <span>F12 Jissen, girls </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB13" data-value="yes">
-					         <span>B13 Junior hokei, mixed </span>
+					        <div class="requireValue" data-variable="eventF13" data-value="yes">
+					         <span>F13 Junior hokei, mixed </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB14" data-value="yes">
-					         <span>B14 Junior hokei, mixed </span>
+					        <div class="requireValue" data-variable="eventF14" data-value="yes">
+					         <span>F14 Jissen, boys </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB15" data-value="yes">
-					         <span>B15 Jissen, boys </span>
+					        <div class="requireValue" data-variable="eventF15" data-value="yes">
+					         <span>F15 Jissen, girls </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB16" data-value="yes">
-					         <span>B16 Jissen, girls </span>
+					        <div class="requireValue" data-variable="eventF16" data-value="yes">
+					         <span>F16 Sonen hokei, mixed  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB17" data-value="yes">
-					         <span>B17 Jissen, boys </span>
+					        <div class="requireValue" data-variable="eventF17" data-value="yes">
+					         <span>F17 Sonen hokei, mixed  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB18" data-value="yes">
-					         <span>B18 Jissen, girls </span>
+					        <div class="requireValue" data-variable="eventF18" data-value="yes">
+					         <span>F18 Sonen jissen, men  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB19" data-value="yes">
-					         <span>B19 Dantai hokei, mixed  </span>
+					        <div class="requireValue" data-variable="eventF19" data-value="yes">
+					         <span>F19 Sonen jissen, women  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB20" data-value="yes">
-					         <span>B20 Dantai jissen, men  </span>
+					        <div class="requireValue" data-variable="eventF20" data-value="yes">
+					         <span>F20 Dantai hokei, mixed  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB21" data-value="yes">
-					         <span>B21 Dantai jissen, women  </span>
+					        <div class="requireValue" data-variable="eventF21" data-value="yes">
+					         <span>F21 Dantai jissen, men  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB22" data-value="yes">
-					         <span>B22 Tenkai, mixed  </span>
+					        <div class="requireValue" data-variable="eventF22" data-value="yes">
+					         <span>F22 Dantai jissen, women  </span>
 					          </div>
-					        <div class="requireValue" data-variable="eventB23" data-value="yes">
-					         <span>B23 Taido trick-track for Juniors </span>
-					        </div>
+					        <div class="requireValue" data-variable="eventF23" data-value="yes">
+					         <span>F23 Tenkai, mixed  </span>
+					          </div>
 					        <div class="requireValue" data-variable="ifgCost" data-value="0">
-						        No events selected.
+						
 					        </div>
 				        </div>
 				
 				        <h2>International Friendship Games teams</h2>
 				
 				        <div class="summaryTeams">
-					        <div class="dantai requireValue" data-variable="eventB19">
-						        <span class="title">Event</span><div>B19 Dantai hokei, mixed</div>
+					        <div class="dantai requireValue" data-variable="eventF20">
+						        <span class="title">Event</span><div>F20 Dantai hokei, mixed</div>
 						
 						        <span class="title">Team name</span><div class="variableObserver" data-variable="teamB19_name"></div>
 						
@@ -923,8 +978,8 @@
 						        <span class="title">Reserve 2</span><div class="variableObserver" data-variable="teamB19_r2"></div>
 					        </div>			
 					
-					        <div class="dantai requireValue" data-variable="eventB20">
-						        <span class="title">Event</span><div>B20 Dantai jissen, men</div>
+					        <div class="dantai requireValue" data-variable="eventF21">
+						        <span class="title">Event</span><div>F21 Dantai jissen, men</div>
 						
 						        <span class="title">Team name</span><div class="variableObserver" data-variable="teamB20_name"></div>
 						
@@ -938,8 +993,8 @@
 						        <span class="title">Reserve 2</span><div class="variableObserver" data-variable="teamB20_r2"></div>
 					        </div>	
 					
-					        <div class="dantai requireValue" data-variable="eventB21">
-						        <span class="title">Event</span><div>B21 Dantai jissen, women</div>
+					        <div class="dantai requireValue" data-variable="eventF22">
+						        <span class="title">Event</span><div>F22 Dantai jissen, women</div>
 						
 						        <span class="title">Team name</span><div class="variableObserver" data-variable="teamB21_name"></div>
 						
@@ -953,8 +1008,8 @@
 						        <span class="title">Reserve 2</span><div class="variableObserver" data-variable="teamB21_r2"></div>
 					        </div>	
 
-					        <div class="dantai requireValue" data-variable="eventB22">
-						        <span class="title">Event</span><div>B22 Tenkai, mixed</div>
+					        <div class="dantai requireValue" data-variable="eventF23">
+						        <span class="title">Event</span><div>F23 Tenkai, mixed</div>
 						
 						        <span class="title">Team name</span><div class="variableObserver" data-variable="teamB22_name"></div>
 						
@@ -968,40 +1023,40 @@
 						        <span class="title">Reserve 2</span><div class="variableObserver" data-variable="teamB22_r2"></div>
 					        </div>	
 				        </div>
-				        <div class="warning disabled" id="eventB19playerMissing">
+				        <div class="warning disabled" id="eventF20PlayerMissing">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected all players for B19 Dantai hokei. Your team will not be allowed to compete if the team is not full.</div>
+					        <div class="content">You have not selected all players for F20 Dantai hokei. Your team will not be allowed to compete if the team is not full.</div>
 				        </div>
-				        <div class="warning disabled" id="eventB19teamRemove">
+				        <div class="warning disabled" id="eventF20teamRemove">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected a name for your B19 Dantai hokei team. No team will be created and any existing teams will be removed.
+					        <div class="content">You have not selected a name for your F20 Dantai hokei team. No team will be created and any existing teams will be removed.
 					        </div>
 				        </div>
-				        <div class="warning disabled" id="eventB20playerMissing">
+				        <div class="warning disabled" id="eventF21playerMissing">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected all players for B20 Dantai jissen, men. Your team will not be allowed to compete if the team is not full.</div>
+					        <div class="content">You have not selected all players for F21 Dantai jissen, men. Your team will not be allowed to compete if the team is not full.</div>
 				        </div>
-				        <div class="warning disabled" id="eventB20teamRemove">
+				        <div class="warning disabled" id="eventF21teamRemove">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected a name for your B20 Dantai jissen team. No team will be created and any existing teams will be removed.
+					        <div class="content">You have not selected a name for your F21 Dantai jissen team. No team will be created and any existing teams will be removed.
 					        </div>
 				        </div>
-				        <div class="warning disabled" id="eventB21playerMissing">
+				        <div class="warning disabled" id="eventF22playerMissing">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected all players for B21 Dantai jissen, women. Your team will not be allowed to compete if the team is not full.</div>
+					        <div class="content">You have not selected all players for F22 Dantai jissen, women. Your team will not be allowed to compete if the team is not full.</div>
 				        </div>
-				        <div class="warning disabled" id="eventB21teamRemove">
+				        <div class="warning disabled" id="eventF22teamRemove">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected a name for your B21 Dantai jissen team. No team will be created and any existing teams will be removed.
+					        <div class="content">You have not selected a name for your F22 Dantai jissen team. No team will be created and any existing teams will be removed.
 					        </div>
 				        </div>			
-				        <div class="warning disabled" id="eventB22playerMissing">
+				        <div class="warning disabled" id="eventF23playerMissing">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected all players for B22 Tenkai. Your team will not be allowed to compete if the team is not full.</div>
+					        <div class="content">You have not selected all players for F23 Tenkai. Your team will not be allowed to compete if the team is not full.</div>
 				        </div>
-				        <div class="warning disabled" id="eventB22teamRemove">
+				        <div class="warning disabled" id="eventF23teamRemove">
 					        <div class="title">Warning!</div>
-					        <div class="content">You have not selected a name for your B22 Tenkai team. No team will be created and any existing teams will be removed.
+					        <div class="content">You have not selected a name for your F23 Tenkai team. No team will be created and any existing teams will be removed.
 					        </div>
 				        </div>
 			        </div>
@@ -1065,43 +1120,7 @@
 			        <div class="varSummary requireValue" data-variable="volunteer" data-value="yes">			
 				        <span>Volunteering during the event</span>
 			        </div>					
-<!--
-			        <div class="varSummary requireValue" data-variable="volunteerTatami307" data-value="yes">			
-				        <span>Carrying tatamis Tue 30.7.</span>
-			        </div>					
 
-			        <div class="varSummary requireValue" data-variable="volunteerTatami028" data-value="yes">			
-				        <span>Carrying tatamis Fri 2.8. evening</span>
-			        </div>					
-			
-			        <div class="varSummary requireValue" data-variable="volunteerTatami048" data-value="yes">			
-				        <span>Carrying tatamis Sun 4.8.</span>
-			        </div>					
-			
-			        <div class="varSummary requireValue" data-variable="volunteerKiosk018" data-value="yes">			
-				        <span>Kiosk clerk Thu 1.8.</span>
-			        </div>					
-			
-			        <div class="varSummary requireValue" data-variable="volunteerKiosk028" data-value="yes">			
-				        <span>Kiosk clerk Fri 2.8.</span>
-			        </div>					
-			
-			        <div class="varSummary requireValue" data-variable="volunteerKiosk038" data-value="yes">			
-				        <span>Kiosk clerk Sat 3.8.</span>
-			        </div>					
-			
-			        <div class="varSummary requireValue" data-variable="volunteerSecurity028" data-value="yes">			
-				        <span>Security officer Fri 2.8.</span>
-			        </div>					
-			
-			        <div class="varSummary requireValue" data-variable="volunteerSecurity038" data-value="yes">			
-				        <span>Security officer Sat 3.8.</span>
-			        </div>												
-
-			        <div class="varSummary requireValue" data-variable="volunteerIT038" data-value="yes">			
-				        <span>Technical help Sat 3.8.</span>
-			        </div>												
--->			
 			
 			        <h2>Hotel</h2>
 			        <?php echo $hotel_summary ?>
@@ -1114,15 +1133,45 @@
 			        </div>
 			
 			        <h2>Optional services</h2>
-			
-			        <div class="varSummary requireValue" data-variable="optionalBanquette">
-				        <span>Banquette</span>
-				        <div class="costSummary">0 SEK</div>
+					
+						        <!--<div class="varSummary requireEnabled" data-variable="firstNameGanji">			
+				        <span class="title">Last name in Ganji</span>
+				        <div class="variableObserver" data-variable="lastNameGanji"></div>			
+			        </div>
+					-->
+			        <div class="varSummary requireEnabled requireValue" data-variable="optionalBanquette">
+				        <span class="title">Banquette</span>
+				        <div class="variableObserver costSummary">600 SEK</div>
 			        </div>
 			
 			        <div class="varSummary requireValue" data-variable="optionalWTCticket">
 				        <span><?php echo $str_event_shorter ?> ticket</span>
-				        <div class="costSummary"> 0 SEK</div>
+				        <div class="variableObserver costSummary"> 120 SEK</div>
+			        </div>
+
+			        <div class="varSummary requireValue" data-variable="optionalIFGticket">
+				        <span>IFTG ticket</span>
+				        <div class="variableObserver costSummary"> 75 SEK</div>
+			        </div>
+			        <div class="varSummary requireValue" data-variable="optionalJudgeSeminars">
+				        <span>Judge Seminars</span>
+				        <div class="variableObserver costSummary"> 400 SEK</div>
+			        </div>
+			        <div class="varSummary requireValue" data-variable="optionalSeminars">
+				        <span>Taido Seminars</span>
+				        <div class="variableObserver costSummary"> 500 SEK</div>
+			        </div>
+			        <div class="varSummary requireValue" data-variable="optionalKidsSeminars">
+				        <span>Kids Taido Seminars</span>
+				        <div class="variableObserver costSummary"> 300 SEK</div>
+			        </div>
+			        <div class="varSummary requireValue" data-variable="optionalTshirt">
+				        <span>T-Shirt</span>
+				        <div class="variableObserver costSummary"> 200 SEK</div>
+			        </div>
+			        <div class="varSummary requireValue" data-variable="optionalHoodie">
+				        <span>Hoodie</span>
+				        <div class="variableObserver costSummary"> 400 SEK</div>
 			        </div>
 			        <?php if($sightseeing_included === True) { echo $sightseeing_summary; } ?>
 
@@ -1136,7 +1185,9 @@
 				        <div class="costSummary"><div class="variableObserver" data-variable="totalCost">0</div> SEK</div>
 				        Total estimated cost				
 			        </h2>
-			
+					<span>Extra info to organizer</span>
+					<div class="clearfloat"></div>
+				        <textarea name="address" rows="4" cols="50" class="variable" data-variable="infoOrganizer"></textarea>
 			        <h2>Submit enrollment</h2>
 			        <p>
 				        Please check that the above information is correct. When you are confident with the content, submit your information as enrollment 
@@ -1153,20 +1204,19 @@
 				        <span class="title">Date modified</span>
 				        <div class="variableObserver" data-variable="modified"></div>
 			        </div>			
-						
-			        <div class="clearfloat"></div>
 		        </div>
 	        </div>	
 
 	        <div class="clearfloat"></div>	
         </div> <!-- pages -->
-    </form>
+    
 
 	<div class="clearfloat"></div>
 	<div id="controls">
 		<div class="button" id="nextButton">Next</div>		
 		<div class="button" id="submitButton">Submit</div>
 		<div class="requireValue" data-variable="status" data-value="Submitted">
+</form>
 			<div class="button" id="retractButton">Retract</div>
 		</div>
 <!--		<div class="button" id="saveButton">Save</div>-->
@@ -1179,10 +1229,11 @@
 		<div id="footerLeft">
 			Help? <a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>
 		</div>
-        <!-- TODO: Remove? -->
+        <!-- TODO: Remove? 
 		<div id="footerRight">
 			<a href="http://www.motify.fi" target="_blank"><img src="images/logo-small.png" alt="Motify" /></a>			
 		</div>
+		-->
 	</div>
 
 </div> <!-- wrapper -->

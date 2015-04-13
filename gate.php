@@ -2,8 +2,6 @@
 session_start();
 ?>
 
-<!DOCTYPE html>
-
 <?php
 if (!strcmp($_SERVER['REQUEST_METHOD'],'POST'))
 	$INDATA = $_POST;

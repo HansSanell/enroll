@@ -72,16 +72,16 @@ function SelectPersonWidget(component, model) {
 
 var wtcEventRules = [
 	// Event code, title, sex, max birth year, soft max birth year, min belt, soft min belt, all inclusive
-	["A1", "Hokei, men", "male", 1997, 1997, -4, 1],
-	["A2", "Hokei, women", "female", 1997, 1997, -4, 1],
-	["A3", "Jissen, men", "male", 1997, 1995, -2, 1],
-	["A4", "Jissen, women", "female", 1997, 1995, -2, 1],
-	["A5", "Dantai hokei, men", "male", 1997, 1997, -4, 1],
-	["A6", "Dantai hokei, women", "female", 1997, 1997, -4, 1],
-	["A7", "Dantai jissen, men", "male", 1997, 1995, -2, 1],	
-	["A8", "Dantai jissen, women", "female", 1997, 1995, -2, 1],	
-	["A9", "Tenkai, mixed", "*", 1997, 1997, -4, 1],	
-	["A10", "Tenkai, women", "female", 1997, 1997, -4, 1]		
+	["A1", "Hokei, men", "male", 1999, 1999, -4, 1],
+	["A2", "Hokei, women", "female", 1999, 1999, -4, 1],
+	["A3", "Jissen, men", "male", 1999, 1997, -2, 1],
+	["A4", "Jissen, women", "female", 1999, 1997, -2, 1],
+	["A5", "Dantai hokei, men", "male", 1999, 1999, -4, 1],
+	["A6", "Dantai hokei, women", "female", 1999, 1999, -4, 1],
+	["A7", "Dantai jissen, men", "male", 1999, 1997, -2, 1],	
+	["A8", "Dantai jissen, women", "female", 1999, 1997, -2, 1],	
+	["A9", "Tenkai, mixed", "*", 1999, 1999, -4, 1],	
+	["A10", "Tenkai, women", "female", 1999, 1999, -4, 1]		
 	];	
 
 function GlobalModel() {
@@ -220,13 +220,13 @@ function GlobalModel() {
 				var person = jQuery.parseJSON(response);
 				// Update model
 			} catch(exception) {
-			    alert("Could not store person. Please contact " + contactEmail + " and supply the following message: exception=" + exception + " response=" + response);
+			    //alert("Could not store person. Please contact " + contactEmail + " and supply the following message: exception=" + exception + " response=" + response);
 			}
 			mdl.updatePerson(person);
 			
 		})
 		.fail(function(jqXHR, type, errorObj) {
-			alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
+			//alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
 		})
 		.complete(function() {
 		});	
@@ -260,13 +260,13 @@ function GlobalModel() {
 							var person = jQuery.parseJSON(response);
 							// Update model
 						} catch(exception) {
-							alert("Could not store person. Please contact " + contactEmail + " and supply the following message: exception=" + exception + " response=" + response);	
+						//	alert("Could not store person. Please contact " + contactEmail + " and supply the following message: exception=" + exception + " response=" + response);	
 						}
 						mdl.updatePerson(person);
 						
 					})
 					.fail(function(jqXHR, type, errorObj) {
-						alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
+						//alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
 					})
 					.complete(function() {
 						dialog.dialog( "close" );			
@@ -302,7 +302,7 @@ function GlobalModel() {
 								mdl.removePerson(person.personid);						
 							})
 							.fail(function(jqXHR, type, errorObj) {
-								alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
+							//	alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
 							})
 							.complete(function() {
 								$("#dialog-confirm-remove-person").dialog( "close" );			
@@ -564,11 +564,52 @@ function GlobalModel() {
 	mdl.setTeamPlayer = function(position, value) {
 		mdl.currentTeam.players[position] = value;
 	};
+	mdl.openIndAdd = function(eventCode) {
 	
+		var dialog = $("#dialog-add-ind");	
+	
+		var buttons = {
+				"Add": function() {				
+					$("#submitStatus").html("Adding new person");
+					alert($("#pName").val());
+					console.log($("#pName").val());
+					$.ajax("gate.php", {
+							dataType: "html",
+							data: {
+								loginid: loginID,
+								operation: "addNameToEvent",
+								name: $("#pName").val(),
+								event: eventCode
+							},
+							type: 'POST',
+					})
+					.success(function(response) {			
+						$("#submitStatus").append(response+"done");				
+						dialog.dialog( "close" );			
+						
+					})
+					.fail(function(jqXHR, type, errorObj) {
+						alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
+					})
+					.complete(function() {
+					});
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );			
+				}
+		};
+		$("#dialog-add-ind").dialog({
+			modal: true,
+			minWidth: 400, 
+			minHeight: 300,
+			resizable: true,
+			buttons: buttons
+		});		
+	};
 	mdl.openTeamAdd = function(eventCode) {
 		
 		var data = mdl.constructEventPeople(eventCode);
-		
+		var dialog = $("#dialog-add-team");	
 		// Clear team name
 		$('#teamName').val("");
 		$("#teamName_nameok").hide();		
@@ -578,61 +619,63 @@ function GlobalModel() {
 		mdl.currentTeam.players = new Object();
 		mdl.currentTeam.nameok = false;
 		mdl.currentTeam.event = eventCode;
-		
-		var requiredPositions = ["lead", "p1", "p2", "p3", "p4", "p5", "p6"];
-		if ($.inArray(eventCode, ["A5", "A6", "A9", "A10"]) > -1)
+		var result = {};
+		result["teamName"] = ($("#teamName").val());
+		$("#lead").show();
+		$("#p6").show();
+		var requiredPositions = ["lead", "p1", "p2", "p3", "p4", "p5", "p6", "r1", "r2"];
+		if ($.inArray(eventCode, ["A5", "A6", "A9", "A10"]) > -1) {
 			// No leader for dantai hokei and tenkai
 			requiredPositions.splice($.inArray("lead", requiredPositions),1);
-			
-		if ($.inArray(eventCode, ["A5", "A6", "A7", "A8"]) > -1)
+			$("#lead").hide();
+		}
+		if ($.inArray(eventCode, ["A5", "A6", "A7", "A8"]) > -1) {
 			// No sixth player for dantai hokei and jissen
 			requiredPositions.splice($.inArray("p6", requiredPositions),1);
-		
-		for(var ind in mdl.selectWidgets) {
-			var widget = mdl.selectWidgets[ind];
-			widget.clear();
-			if ($.inArray(widget.name, requiredPositions) > -1 || widget.name[0] == 'r') 
-				widget.show();
-			else 
-				widget.hide();
-			if (widget.name == "lead")
-				widget.setData(data.leaders);
-			else
-				widget.setData(data.competitors);			
+			$("#p6").hide();
 		}
-		
-		
 		var dialog = $("#dialog-add-team");	
 		var buttons = {
 				"Add": function() {				
-					$("#submitStatus").html("Adding new team");
-					
-					if (!mdl.currentTeam.nameok) {
-						alert("The team must have a valid name.");
-						return;
-					}
-					
-					// Check all fields
-					var people = new Array();
+					result["teamName"] = $("#teamName").val();
+					result["event"] = eventCode;
 					for (var ind in requiredPositions) {
-						var personid = mdl.currentTeam.players[requiredPositions[ind]];
-						if (personid == null) {
-							alert("The team must be full before it can be added.");
-							return;
+					    if (requiredPositions[ind] == "lead") {
+						    result["lead"] = $("#leadIn").val();
 						}
-						if ($.inArray(personid, people) > -1) {
-							alert("Cannot have the same person in several positions.");
-							return;
+						if (requiredPositions[ind] == "p1") {
+						    result["p1"] = $("#p1In").val();
 						}
-						people.push(personid);
+						if (requiredPositions[ind] == "p2") {
+						    result["p2"] = $("#p2In").val();
+						}
+						if (requiredPositions[ind] == "p3") {
+						    result["p3"] = $("#p3In").val();
+						}
+						if (requiredPositions[ind] == "p4") {
+						    result["p4"] = $("#p4In").val();
+						}
+						if (requiredPositions[ind] == "p5") {
+						    result["p5"] = $("#p5In").val();
+						}
+						if (requiredPositions[ind] == "p6") {
+						    result["p6"] = $("#p6In").val();
+						}
+						if (requiredPositions[ind] == "r1") {
+						    result["r1"] = $("#r1In").val();
+						}
+						if (requiredPositions[ind] == "r2") {
+						    result["r2"] = $("#r2In").val();
+						}
 					}
+					
 					
 					$.ajax("gate.php", {
 							dataType: "html",
 							data: {
 								loginid: loginID,
 								operation: "addTeam",
-								data: JSON.stringify(mdl.currentTeam)
+								data: JSON.stringify(result)
 							},
 							type: 'POST',
 					})
@@ -641,23 +684,14 @@ function GlobalModel() {
 						try {
 							var teamid = jQuery.parseJSON(response);
 						} catch(exception) {
-							alert("Could not store person. Please contact " + contactEmail + " and supply the following message: exception=" + exception + " response=" + response);
+							//alert("Could not store person. Please contact " + contactEmail + " and supply the following message: exception=" + exception + " response=" + response);
 							return;
 						}			
-						
-						// Update model
-						mdl.currentTeam.teamid = teamid;
-						
-						for(var ind in mdl.currentTeam.players) {
-							mdl.events[mdl.currentTeam.event].push(mdl.currentTeam.players[ind]);
-						}
-						mdl.addTeam(mdl.currentTeam);
-						
 						dialog.dialog( "close" );			
 						
 					})
 					.fail(function(jqXHR, type, errorObj) {
-						alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
+					//	alert("Could not store person. Please contact " + contactEmail + " and supply the following message: type=" + type + ", error="+errorObj);			
 					})
 					.complete(function() {
 					});
@@ -861,6 +895,7 @@ function Pages() {
 	this.setEnabled = function(index, enable) {
 		if (typeof index == "string") {
 			index = pgs.names[index];
+			index = pgs.names[index];
 		}
 		var page = pgs.all[index];
 		if (enable) {
@@ -945,7 +980,9 @@ $(function() {
 	$(".addTeamButton").button().click(function() {
 		model.openTeamAdd($(this).attr("data-code"));
 	});
-	
+	$(".addIndButton").button().click(function() {
+		model.openIndAdd($(this).attr("data-code"));
+	});
 	$("#peopleReport").button().click(function() {
 		window.open("gate.php?loginid="+loginID+"&page=managereport&report=people");
 	});
@@ -1007,7 +1044,7 @@ $(function() {
 		var matches;
 		var url = 'gate.php?loginid=' + loginID + '&operation=teamname';
 		url += '&event=' + model.currentTeam.event + '&name=' + escape(value);
-		
+		alert(url);
 		$.ajax({
 				url:   url,
 				success: function(response) {

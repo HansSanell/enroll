@@ -2,6 +2,7 @@
 <!-- PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  -->
 <html>
 <head>
+    
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.0.custom.min.js"></script>
 	<link href="css/jquery-ui-1.10.1.custom.css" rel="stylesheet" />
@@ -9,15 +10,41 @@
 	<link href="css/tee.css" rel="stylesheet" type="text/css" />
 	<link href="css/tee_manager.css" rel="stylesheet" type="text/css" />
 
-    <title><?php $str_event_short ?> Enrollment - Manage</title>
+    <title><?php echo $str_event_short; ?> Enrollment - Manage</title>
 </head>
 <body>
+<?php 
+
+function getPersonsFromCountry() {
+    include 'database.php';
+	try {
+		$result = $mysqli->query("SELECT nationality FROM tee_people WHERE loginid='".$_GET["loginid"]."'") or die($mysqli->error);
+		$nation = $result->fetch_object()->nationality;
+		
+	 
+	
+		$result = $mysqli->query("SELECT personid, firstName, lastName FROM tee_people WHERE nationality='".$nation."' AND role='wtc'") or die($mysqli->error);
+	} catch (Exception $e) {
+	    echo "caught exception:  " .$e->getMessage();
+	}
+	$response = [];	
+	
+	while ($obj = $result->fetch_object()) {
+		array_push($response, $obj);
+		
+		
+	}
+	
+	return $response;
+}
+
+?>
 <div class="wrapper">
 	<div class="logo"></div>
 	
 	<div class="navigation">
 		<ul> 
-			<li><a href="#" data-target="peoplePage">People</a></li>
+		<!--	<li><a href="#" data-target="peoplePage">People</a></li>-->
 			<li><a href="#" data-target="wtcIndividualPage">Individual events</a></li>
 			<li><a href="#" data-target="wtcTeamPage">Team events</a></li>
 			<li><a href="#" data-target="reportsPage">Reports</a></li>
@@ -48,91 +75,84 @@
 	    <div class="page" id="wtcIndividualPage">
 		    <h1>Individual <?php $str_event_shorter?> events</h1>
 		    <p>
-			    This page allows you to assign competitors to the <?php $str_event_shorter?> events. A person can enroll to an event only if they have been assigned
-                the "<?php $str_event_shorter?> Competor" role and their taido rank and birth year meet the required criteria. In some cases, if a person is very young
+			    This page allows you to assign competitors to the <?php echo $str_event_shorter?> events. A person can enroll to an event only if they have been assigned
+                the "<?php echo $str_event_shorter?> Competor" role and their taido rank and birth year meet the required criteria. In some cases, if a person is very young
                 or has a low taido rank, a letter of recommendation (LOR) may be required. LOR should be sent by email to the 
-                <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) preferably before the submission 
-                deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and the World Taido Federation.
+                <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) preferably before the submission 
+                deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and the World Taido Federation.
 		    </p>
 		    <div id="events">
 			    <span class="eventTitle">A1 Hokei, men</span>
 			    <div class="addToEvent">
-				    Add a competitor
-				    <input class="addToEventInput" data-code="A1" />
+					<div class="addIndButton" data-code="A1">Add person</div>
 			    </div>
 			    <div class="clearfloat"></div>
-			    <div class="eventList" id="eventA1people"><img src="images/ajax-loader.gif" alt="Loading" /></div>
 			
 			    <span class="eventTitle">A2 Hokei, women</span>
 			    <div class="addToEvent">
-				    Add a competitor 
-				    <input class="addToEventInput" data-code="A2" />
+				    <div class="addIndButton" data-code="A2">Add person</div>
 			    </div>
 			    <div class="clearfloat"></div>
-			    <div class="eventList" id="eventA2people"><img src="images/ajax-loader.gif" alt="Loading" /></div>
 			
 			    <span class="eventTitle">A3 Jissen, men</span>
 			    <div class="addToEvent">
-				    Add a competitor 
-				    <input class="addToEventInput" data-code="A3" />
+				    <div class="addIndButton" data-code="A3">Add person</div>
 			    </div>
 			    <div class="clearfloat"></div>
-			    <div class="eventList" id="eventA3people"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+			    
 			    <span class="eventTitle">A4 Jissen, women</span>
 			    <div class="addToEvent">
-				    Add a competitor 
-				    <input class="addToEventInput" data-code="A4" />
+					<div class="addIndButton" data-code="A4">Add person</div>
 			    </div>
 			    <div class="clearfloat"></div>
-			    <div class="eventList" id="eventA4people"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+			    
 			
 		    </div>
 	    </div>	
 	    <div class="page" id="wtcTeamPage">
 		    <h1>Team events</h1>
 		    <p>
-			    You can edit the people enrolled to the team events of <?php $str_event_short?>. When a person is selected to a team, he or she are automatically
-                enrolled to the event. Conversely, when he or she is removed from a team, his or her enrollment to the event will be automatically 
-                removed.			
+			    You can add competitors to the team events of <?php echo $str_event_short?>. When a person is selected to a team, he or she are automatically
+                enrolled to the event. 
 		    </p>
 		    <p>
-			    A person can be included in a team only if they have been assigned the "<?php $str_event_shorter?> Competor" role and their taido rank and birth year
+			    A person can be included in a team only if they have been assigned the "<?php echo $str_event_shorter?> Competor" role and their taido rank and birth year
                 meet the required criteria. However, these requirements do not apply to leaders and hence you can add any enrolled person as a 
                 team leader. Also, in some cases, if a person is very young or has a low taido rank, a letter of recommendation (LOR) may be 
-                required. LOR should be sent by email to the <?php $contact_name ?> (<a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>) 
-                preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php $contact_name ?> and 
+                required. LOR should be sent by email to the <?php echo $contact_name ?> (<a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>) 
+                preferably before the submission deadline ends. All applicants are documented and reviewed by both the <?php echo $contact_name ?> and 
                 the World Taido Federation.		
 		    </p>
 		
 		    <span class="eventTitle">A5 Dantai hokei, men</span>
 		    <div class="addTeamButton" data-code="A5">Add team</div>
 		    <div class="clearfloat"></div>
-		    <div class="eventList" id="eventA5teams"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+		    
 		
 		    <span class="eventTitle">A6 Dantai hokei, women</span>
 		    <div class="addTeamButton" data-code="A6">Add team</div>
 		    <div class="clearfloat"></div>
-		    <div class="eventList" id="eventA6teams"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+		    
 
 		    <span class="eventTitle">A7 Dantai jissen, men</span>
 		    <div class="addTeamButton" data-code="A7">Add team</div>
 		    <div class="clearfloat"></div>
-		    <div class="eventList" id="eventA7teams"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+		    
 
 		    <span class="eventTitle">A8 Dantai jissen, women</span>
 		    <div class="addTeamButton" data-code="A8">Add team</div>
 		    <div class="clearfloat"></div>
-		    <div class="eventList" id="eventA8teams"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+		    
 		
 		    <span class="eventTitle">A9 Tenkai, mixed</span>
 		    <div class="addTeamButton" data-code="A9">Add team</div>
 		    <div class="clearfloat"></div>
-		    <div class="eventList" id="eventA9teams"><img src="images/ajax-loader.gif" alt="Loading" /></div>
+		    
 		
 		    <span class="eventTitle">A10 Tenkai, women</span>
 		    <div class="addTeamButton" data-code="A10">Add team</div>
 		    <div class="clearfloat"></div>
-		    <div class="eventList" id="eventA10teams"><img src="images/ajax-loader.gif" alt="Loading" /></div>		
+		    
 	    </div>	
 	    <div class="page" id="reportsPage">
 		    <h1>Reports of all enrollments</h1>
@@ -166,11 +186,13 @@
 
 	<div id="footer">
 		<div id="footerLeft">
-			Help? <a href="mailto:<?php $contact_email ?>"><?php $contact_email ?></a>
+			Help? <a href="mailto:<?php echo $contact_email ?>"><?php echo $contact_email ?></a>
 		</div>
+		<!-- 
 		<div id="footerRight">
 			<a href="http://www.motify.fi" target="_blank"><img src="images/logo-small.png" alt="Motify" /></a>			
 		</div>
+		 -->
 	</div>
 
 </div> <!-- wrapper -->
@@ -245,6 +267,7 @@
 				<option value="-5">5 kyu</option>
 				<option value="-6">6 kyu</option>
 				<option value="-7" selected="selected">7 kyu</option>
+				<option value="-8">Kids rank</option>
 				<option value="none">don't practice</option>						
 			</select>			
 		</label>
@@ -252,7 +275,7 @@
 		<label for="role"><span class="title">Role</span>
 			<select name="role">
 				<option value="">None</option>
-				<option value="wtc"><?php $str_event_shorter?> Competitor</option>
+				<option value="wtc"><?php echo $str_event_shorter?> Competitor</option>
 				<option value="staff">Staff</option>
 			</select>
 		</label>		
@@ -271,49 +294,97 @@
 	<p>A new tab has been opened, where you can edit the enrollment information for the selected person. Close this dialog box to refresh the contents of this page.
 	</p>
 </div>
-
+<div id="dialog-add-ind" title="Add a induvidual" class="dialog" style="min-height:80px">
+	<label for="name">
+	Select the person from your country to add to this event.
+	<div  class="clearfloat"></div>
+		
+		<?php 
+		$persons = getPersonsFromCountry(); 
+		//echo "test";<input class='addToEventInput' id='".$ids[$i]."In'/>
+		echo "<div id='name'><span class='title'>Name</span><select name='pName' id='pName' class='variable'>";
+		echo "<option value='0'>Select participant</option>";
+		for($y=0; $y<count($persons); $y++) 
+		{
+			//echo "<option value='".$persons[$y]->personid."'>".$persons[$y]->firstName." ".$persons[$y]->lastName."</option>";
+			echo "<option value='".$persons[$y]->firstName." ".$persons[$y]->lastName."'>".$persons[$y]->firstName." ".$persons[$y]->lastName."</option>";
+		}
+		echo "</select></div>";
+		
+		?>
+<!--		<div class="selectPerson" data-position="person" id="pName"></div>
+		<input class="addToEventInput" id="pName"/>-->
+	</label>
+</div>
 <div id="dialog-add-team" title="Add a new team" class="dialog">
 	<label for="teamName"><span class="title">Team name</span>
 		<input type="text" name="teamName" id="teamName" />
 		<div id="teamName_loading" class="loading"><img src="images/ajax-loader.gif" alt="Loader" /></div>
 		<div id="teamName_nameok" class="nameok"><img src="images/tick.png" alt="Tick" /></div>
 	</label>	
+	<?php //echo getPersonsFromCountry(); 
 	
-	<label for="lead"><span class="title">Leader</span>
-		<div class="selectPerson" data-position="lead"></div>
-	</label>
+
+	$ids = ["lead", "p1", "p2", "p3", "p4", "p5", "p6", "r1", "r2"];
+	$titles = ["Leader", "Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Reserve 1", "Reserve 2"];
+	for($i=0; $i<9; $i++) 
+	{
+		$persons = getPersonsFromCountry(); 
+		//echo "test";<input class='addToEventInput' id='".$ids[$i]."In'/>
+		echo "<div id='".$ids[$i]."'><span class='title'>".$titles[$i]."</span><select name='player' id='".$ids[$i]."In' class='variable'>";
+		echo "<option value='0'>Select participant</option>";
+		for($y=0; $y<count($persons); $y++) 
+		{
+			echo "<option value='".$persons[$y]->personid."'>".$persons[$y]->firstName." ".$persons[$y]->lastName."</option>";
+		}
+		echo "</select></div>";
+	}
 	
-	<label for="p1"><span class="title">Player 1</span>
-		<div class="selectPerson" data-position="p1"></div>
+	?>
+	<!--<div id="lead"><label for="lead"><span class="title">Leader</span>
+		<input class="addToEventInput" id="leadIn"/>
 	</label>
-
-	<label for="p2"><span class="title">Player 2</span>
-		<div class="selectPerson" data-position="p2"></div>
-	</label>
-
-	<label for="p3"><span class="title">Player 3</span>
-		<div class="selectPerson" data-position="p3"></div>
-	</label>
-
-	<label for="p4"><span class="title">Player 4</span>
-		<div class="selectPerson" data-position="p4"></div>
-	</label>
-
-	<label for="p5"><span class="title">Player 5</span>
-		<div class="selectPerson" data-position="p5"></div>
-	</label>
-
-	<label for="p6"><span class="title">Player 6</span>
-		<div class="selectPerson" data-position="p6"></div>
-	</label>
-	
-	<label for="r1"><span class="title">Reserve 1</span>
-		<div class="selectPerson" data-position="r1"></div>
-	</label>
-	
-	<label for="r2"><span class="title">Reserve 2</span>
-		<div class="selectPerson" data-position="r2"></div>
-	</label>
+	</div>
+	<div id="p1">
+		<label for="p1"><span class="title">Player 1</span>
+			<input class="addToEventInput" id="p1In"/>
+		</label>
+	</div>
+	<div id="p2">
+		<label for="p2"><span class="title">Player 2</span>
+			<input class="addToEventInput" id="p2In"/>
+		</label>
+	</div>
+	<div id="p3">
+		<label for="p3"><span class="title">Player 3</span>
+			<input class="addToEventInput" id="p3In"/>
+		</label>
+	</div>
+	<div id="p4">
+		<label for="p4"><span class="title">Player 4</span>
+			<input class="addToEventInput" id="p4In"/>
+		</label>
+	</div>
+	<div id="p5">
+		<label for="p5"><span class="title">Player 5</span>
+			<input class="addToEventInput" id="p5In"/>
+		</label>
+	</div>
+	<div id="p6">
+		<label for="p6"><span class="title">Player 6</span>		
+			<input class="addToEventInput" id="p6In"/>
+		</label>
+	</div>
+	<div id="r1">
+		<label for="r1"><span class="title">Reserve 1</span>		
+			<input class="addToEventInput" id="r1In"/>
+		</label>
+	</div>
+	<div id="r2">
+		<label for="r2"><span class="title">Reserve 2</span>		
+			<input class="addToEventInput" id="r2In"/>
+		</label>
+	</div>-->
 </div>
 
 <div id="submitStatus"></div>			

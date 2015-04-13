@@ -1,7 +1,7 @@
 <?php 
     
 // $INDATA, $person and $mysqli are made available by gate.php
-
+include 'settings.php';
 if (array_key_exists("actor", $INDATA)) {
 	// Someone is acting as the person in personid
 	$result = $mysqli->query("SELECT * FROM tee_people WHERE loginid=\"".$INDATA["actor"]."\"") or die($mysqli->error);
@@ -94,7 +94,7 @@ case "fetch":
 		$result = $mysqli->query("SELECT * FROM tee_hotel WHERE personid=".$person->personid) or die($mysqli->error);
 		if ($hotel = $result->fetch_object()) {
 			// Person had selected a hotel
-			$nightNames  = array("307", "317", "018", "028", "038", "048");
+			$nightNames  = array("38", "48", "58", "68", "68", "88");
 			for ($i = 0; $i < count($nightNames); ++$i) {	
 				if ($hotel->nights[$i] == "1") {
 					$data->{"hotel".$nightNames[$i]} = "yes";
@@ -195,7 +195,25 @@ case "removeFromEvent":
 		echo "Didn't remove correct number of rows: ".$mysqli->affected_rows;
 	}
 	break;	
+case "addNameToEvent":
+	if (!($person->manager > 0)) {
+		echo "You do not have permission to access this page. Please contact " + $contact_email + ".";
+		exit();
+	}
 
+	$event = $mysqli->real_escape_string($INDATA["event"]);
+	$name = explode(" ", $mysqli->real_escape_string($INDATA["name"]));
+	if($person->nationality != "japanese"){
+		$personResult = $mysqli->query("SELECT personid FROM tee_people WHERE firstName='".$name[0]."' AND lastName='".$name[1]."' AND nationality='".$person->nationality."'") or die($mysqli->error);
+	} else {
+		$personResult = $mysqli->query("SELECT personid FROM tee_people WHERE firstNameGanji='".$name[0]."' AND lastNameGanji='".$name[1]."' AND nationality='".$person->nationality."'") or die($mysqli->error);
+	}
+	$personid = $personResult->fetch_object();
+    if ($personid != 0) {
+		$mysqli->query("INSERT INTO tee_events SET personid='".$personid->personid."', event='".$event."'") or die($mysqli->error);
+	} 
+	
+    break;
 case "addToEvent":
 	if (!($person->manager > 0)) {
 		echo "You do not have permission to access this page. Please contact " + $contact_email + ".";
@@ -213,21 +231,28 @@ case "addToEvent":
 	break;	
 	
 case "addTeam":
-	if (!($person->manager > 0)) {
+	/*if (!($person->manager > 0)) {
 		echo "You do not have permission to access this page. Please contact " + $contact_email + ".";
 		exit();
 	}
+	*/
 	$data = json_decode($INDATA["data"]);	
-	$mysqli->query("INSERT INTO tee_teams SET event='". $data->event ."', name='".$data->name."', nationality='". $person->nationality ."'") or die($mysqli->error);
+	$positions = ["lead", "p1", "p2", "p3", "p4", "p5", "p6", "r1", "r2"];
+	
+	$mysqli->query("INSERT INTO tee_teams SET event='". $data->event ."', name='".$data->teamName."', nationality='". $person->nationality ."'") or die($mysqli->error);
 	if ($mysqli->affected_rows != 1) {
 		echo "Didn't add correct number of rows: ".$mysqli->affected_rows;
 		exit();
 	}
 	$teamid = $mysqli->insert_id;
-	foreach(($data->players) as $position=>$id) {
-		if ($id != null) {
-			$mysqli->query("INSERT INTO tee_players SET teamid='".$teamid."', personid='".$id."', position='".$position."'") or die($mysqli->error);
-			$mysqli->query("INSERT INTO tee_events SET personid=".$id.", event='".$data->event."'") or die($mysqli->error);
+
+	
+	foreach($positions as $position) {
+	    echo $position . " ".$data->$position;
+	 //   echo $position;
+		if ($data->$position != null && $data->$position != 0 && $data->$position != "0") {
+			$mysqli->query("INSERT INTO tee_players SET teamid='".$teamid."', personid='".$data->$position."', position='".$position."'") or die($mysqli->error);
+			$mysqli->query("INSERT INTO tee_events SET personid=".$data->$position.", event='".$data->event."'") or die($mysqli->error);
 		}
 	}
 	
@@ -284,14 +309,14 @@ case "storePerson":
 		exit();
 	}	
 
-	echo "Hej!";
+	
 	
 	// Update personal data
 	$data = json_decode($INDATA["data"]);
-	
+	//echo "Hej!" .$data->personid;
 	if ($data->personid != -99) {
 		$stmt = $mysqli->prepare("UPDATE tee_people SET lastName=?, firstName=?, email=?, birthDay=?, birthMonth=?, birthYear=?, sex=?, taidoRank=?, lastNameGanji=?, firstNameGanji=?, nationality=?, role=? WHERE personid=?") or die($mysqli->error);	
-		$stmt->bind_param("sssiiissssssi", 
+		$stmt->bind_param("sssiiisssssssi", 
 			$data->lastName, 
 			$data->firstName, 
 			$data->email,
@@ -307,12 +332,12 @@ case "storePerson":
 			$data->personid);
 
 	} else {
-		$stmt = $mysqli->prepare("INSERT tee_people SET loginid=?, lastName=?, firstName=?, email=?, birthDay=?, birthMonth=?, birthYear=?, sex=?, taidoRank=?, lastNameGanji=?, firstNameGanji=?, nationality=?, role=?") or die($mysqli->error);	
+		$stmt = $mysqli->prepare("INSERT tee_people SET loginid=?, lastName=?, firstName=?, email=?, birthDay=?, birthMonth=?, birthYear=?, sex=?, taidoRank=?, lastNameGanji=?, firstNameGanji=?, nationality=?, role=?, manager=?") or die($mysqli->error);	
 
         //TODO: Can we use $str_event_short here? Is it appropriate?
-		$loginid = md5("wtc2013" . date("F j, Y, g:i a") . $mysqli->real_escape_string($data->email));
+		$loginid = md5("etc2015" . date("F j, Y, g:i a") . $mysqli->real_escape_string($data->email));
 		
-		$stmt->bind_param("ssssiiissssss", 
+		$stmt->bind_param("ssssiiisssssss", 
 			$loginid,
 			$data->lastName, 
 			$data->firstName, 
@@ -325,7 +350,8 @@ case "storePerson":
 			$data->lastNameGanji,
 			$data->firstNameGanji,
 			$person->nationality, // A manager can only handle his/her own countrymen
-			$data->role);			
+			$data->role,
+			$data->manager);			
 	}
 	
 	$stmt->execute() or die($mysqli->error);
@@ -340,18 +366,20 @@ case "storePerson":
 	break;
     
 case "submit": 				
-	
+
 	// Store submitted data just in case
 	$stmt = $mysqli->prepare("REPLACE tee_cache SET personid=?, data=?") or die($mysqli->error);
+	
 	$stmt->bind_param("is", $person->personid, $INDATA["data"]);
 	$stmt->execute() or die($mysqli->error);
 	
 	// Update personal data
 	$data = json_decode($INDATA["data"]);
+	$stmt = $mysqli->prepare("UPDATE tee_people SET lastName=?, firstName=?, birthDay=?, birthMonth=?, birthYear=?, sex=?, taidoRank=?, lastNameGanji=?, firstNameGanji=?, nationality=?, package=?, status=\"Submitted\", manager=?, role=? WHERE personid=?") or die($mysqli->error);	
 
-	$stmt = $mysqli->prepare("UPDATE tee_people SET lastName=?, firstName=?, birthDay=?, birthMonth=?, birthYear=?, sex=?, taidoRank=?, lastNameGanji=?, firstNameGanji=?, nationality=?, package=?, status=\"Submitted\" WHERE personid=?") or die($mysqli->error);	
-
-	$stmt->bind_param("ssiiissssssi", 
+	$manager = ($data->manager === 'yes' ? 1:0);
+	$role = ($data->package === "WTC Competitor" ? "wtc":"");
+	$stmt->bind_param("ssiiissssssisi", 
 		$data->lastName, 
 		$data->firstName, 
 		$data->birthDay,
@@ -363,10 +391,11 @@ case "submit":
 		$data->firstNameGanji,
 		$data->nationality,
 		$data->package,
+		$manager,
+		$role,
 		$person->personid);
 		
 	$stmt->execute() or die($mysqli->error);
-
 	// Personal information update successful	
 	$result = $mysqli->query("SELECT * FROM tee_people WHERE personid=".$person->personid) or die($mysqli->error);
 	$person = $result->fetch_object();
@@ -377,22 +406,31 @@ case "submit":
 	
 	// Update event information and storable variables
 	$mysqli->query("DELETE FROM tee_variables WHERE personid=".$person->personid);
-	$storable = array("diet", "dojo", "helsinkiTourThursday", "helsinkiTourWednesday", "hikingTour", "ifgJudge", "judgeECCount", "judgeIFGCount", "judgeNationalCount", "judgeNationalSeminars", "judgeInternationalSeminars", "judgeWCCount", "optionalBanquette", "optionalWTCticket", "porvooTour", "separateBeds", "tallinTour", "tshirt", "ultimateSauna", "volunteerIT038", "volunteerKiosk018", "volunteerKiosk028", "volunteerKiosk038", "volunteerSecurity028", "volunteerSecurity038", "volunteerTatami028", "volunteerTatami048","volunteerTatami307", "willComplete4dan", "wtcJudge");
+	$storable = array("diet", "dojo", "ifgJudge", "judgeECCount", "judgeIFGCount", "judgeNationalCount","optionalIFGticket", "judgeNationalSeminars", "judgeInternationalSeminars", "judgeWCCount", "optionalBanquette", "optionalWTCticket", "separateBeds", "volunteer", "willComplete4dan", "wtcJudge","optionalSeminars","optionalJudgeSeminars","optionalKidsSeminars","optionalTshirt","optionalHoodie","infoOrganizer","tshirt");
 	// Remove all IFG event enrollments
-	$mysqli->query("DELETE FROM tee_events WHERE personid=".$person->personid." AND event LIKE 'B%'");			
+	$mysqli->query("DELETE FROM tee_events WHERE personid=".$person->personid." AND event LIKE 'F%'");		
+    $logfile = "tmp.txt";	
+	$current = file_get_contents($logfile);
+	
 	foreach ($data as $key => $value) {
+		$current .= $key;
+		$current .= $value;
+		$current .= "\n";
 		if (strcmp(substr($key,0,5),"event") == 0) {
 			$code = $mysqli->real_escape_string(substr($key,5));
 			if (strcmp($value,"yes")==0) {
 				$mysqli->query("INSERT INTO tee_events(personid, event) VALUES (". $person->personid .", \"". $code . "\")") or die($mysqli->error);
 			}
 		} elseif (in_array($key, $storable) && ($value)) {
+
 			$mysqli->query("INSERT INTO tee_variables(personid, variable, value) VALUES (". $person->personid .",\"". $mysqli->real_escape_string($key). "\",\"". $mysqli->real_escape_string($value) ."\")");
+
 		}
 	}
+	file_put_contents($logfile, $current);
 	
 	// Update hotel information
-	$nightNames  = array("307", "317", "018", "028", "038", "048");
+	$nightNames  = array("38", "48", "58", "68", "78", "88");
 	$nights = "000000";
 	$nrnights = 0;	
 	for ($i = 0; $i < count($nightNames); ++$i) {	
@@ -427,7 +465,7 @@ case "submit":
 	$mysqli->query("LOCK TABLES tee_teams WRITE tee_players WRITE");
 	$teamsResult = $mysqli->query("SELECT * FROM tee_teams JOIN tee_players WHERE tee_players.teamid=tee_teams.teamid AND tee_players.personid=".$person->personid) or die($mysqli->error);		
 	$conflicts = array();
-	$teamEvents = array("B19", "B20", "B21", "B22");	
+	$teamEvents = array("F19", "F20", "F21", "F22");	
 	
 	$teamPositions = array("p1","p2","p3","p4","p5","p6","lead","r1","r2");
 	while ($team = $teamsResult->fetch_object()) {
@@ -589,13 +627,13 @@ default:
 function expandEventName($code) {
 	$event = new stdClass();
 	if ($code[0] == 'A') {
-	} elseif ($code[0] == 'B') {
-		$event->category = "International Frienship Games 2013";
+	} elseif ($code[0] == 'F') {
+		$event->category = "International Frienship Games 2015";
 		switch ($code) {
-		case "B19": $event->event = "B19 Dantai hokei"; break;
-		case "B20": $event->event = "B20 Dantai jissen, men"; break;
-		case "B21": $event->event = "B21 Dantai jissen, women"; break;
-		case "B22": $event->event = "B22 Tenkai"; break;		
+		case "F20": $event->event = "F20 Dantai hokei"; break;
+		case "F21": $event->event = "F21 Dantai jissen, men"; break;
+		case "F22": $event->event = "F22 Dantai jissen, women"; break;
+		case "F23": $event->event = "F23 Tenkai"; break;		
 		}	
 	}
 	return $event;
@@ -680,7 +718,11 @@ function sendReport($INDATA, $person, $mysqli) {
 	include "report.php";
 	$report = ob_get_contents();
 	ob_end_clean();
-	
+	if ($person->manager == 1) {
+	    $extra = 'To manage your team please visit http://www.etc2015.se/enroll/gate.php?loginid='.$person->loginid.'&page=manage';
+	} else {
+	    $extra = ''; 
+	}
 	$message =
 'Dear '. $person->firstName . ' ' . $person->lastName .',
 	
@@ -688,10 +730,12 @@ Summary of your enrollment:
 
 '.$report.'
 
+'.$extra.'
+
 Sincerely yours,
 ' . $str_event_short . ' web team';
 
-	$topic = "WTC2013 enrollment summary";
+	$topic = "ETC2015 enrollment summary";
 	$headers = array(
 		'From: ' . $contact_email,
         'Content-type: text/plain; charset="UTF-8";',		

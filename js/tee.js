@@ -441,6 +441,7 @@ function GlobalModel() {
 			$('.requireDisabled[data-variable=\"' + name + '\"]').each(function() {$(this).addClass('disabled')});
 			$('.variableObserver[data-variable=\"' + name + '\"]').each(function() {$(this).removeClass('disabled')});
 			mdl.setValue(name, null);		
+//			$('.variable[data-variable=\"' + name + '\"]').show();
 //			mdl.updateObservers(name, null);
 		} else {
 			// When disabiling, reset the variable
@@ -451,6 +452,7 @@ function GlobalModel() {
 			$('.requireDisabled[data-variable=\"' + name + '\"]').each(function() {$(this).removeClass('disabled')});
 			$('.requireValue[data-variable=\"' + name + '\"]').each(function() {$(this).addClass('disabled')});
 			$('.variableObserver[data-variable=\"' + name + '\"]').each(function() {$(this).addClass('disabled')});
+//			$('.variable[data-variable=\"' + name + '\"]').hide();
 		}			
 	};
 	
@@ -459,6 +461,7 @@ function GlobalModel() {
 		try {
 			// Test if the result is JSON
 			var values = jQuery.parseJSON(response);
+			//console.log(values);
 			isJSON = true;
 		} catch (exception) {
 			$('#submitStatus').append(exception);					
@@ -493,6 +496,7 @@ function GlobalModel() {
 	// Store to server routines
 	mdl.store = function(operation) {	
 		$("#submitStatus").html(operation + "...");
+		console.log(JSON.stringify(mdl.values));
 		$.ajax("gate.php", {
 				dataType: "html",
 				data: {
@@ -547,7 +551,8 @@ function GlobalModel() {
 		})
 		.done(function(response) {
 			$("#submitStatus").html("Response: " + response);				
-			mdl.useResponse(response);
+			
+		//	mdl.useResponse(response);
 			$("#loadingPage").hide();
 			pages.openPage("personalPage"); 
 			$('#submitStatus').append(" Opening personal page.");						
@@ -691,29 +696,30 @@ function Pages() {
 
 var eventRules = [
 	// Event code, sex, min birth year, max year, min belt, max belt, all inclusive
-	["B1", "male", 0, 1997, -2, 10],
-	["B2", "female", 0, 1997, -2, 10],
-	["B3", "male", 0, 1997, -2, 10],
-	["B4", "female", 0, 1997, -2, 10],
-	["B5", "male", 0, 1997, -6, -3],
-	["B6", "female", 0, 1997, -6, -3],
-	["B7", "male", 0, 1997, -6, -3],
-	["B8", "female", 0, 1997, -6, -3],
-	["B9", "*", 0, 1978, -6, 10],
-	["B10", "*", 0, 1978, -6, 10],
-	["B11", "male", 0, 1978, -2, 10],
-	["B12", "female", 0, 1978, -2, 10],
-	["B13", "*", 2001, 2013, -9, 10],
-	["B14", "*", 1998, 2000, -9, 10],
-	["B15", "male", 1999, 2001, -6, 10],
-	["B16", "female", 1999, 2001, -6, 10],
-	["B17", "male", 1996, 1998, -6, 10],
-	["B18", "female", 1996, 1998, -6, 10],
-	["B19", "*", 0, 2003, -9, 10],
-	["B20", "male", 0, 1997, -2, 10],
-	["B21", "female", 0, 1997, -2, 10],
-	["B22", "*", 0, 2003, -9, 10],
-	["B23", "*", 2001, 2013, -9, 10]
+	["F1", "male", 0, 2003, -2, 10],
+	["F2", "female", 0, 2003, -2, 10],
+	["F3", "male", 0, 1999, -2, 10],
+	["F4", "female", 0, 1999, -2, 10],
+	["F5", "male", 0, 2015, -6, -3],
+	["F6", "female", 0, 2015, -6, -3],
+	["F7", "male", 0, 1999, -6, -3],
+	["F8", "female", 0, 1999, -6, -3],
+	["F9", "*", 2006, 2008, -9, 10],
+	["F10", "*", 2003, 2005, -9, 10],
+	["F11", "male", 2003, 2005, -9, 10],
+	["F12", "female", 2003, 2005, -9, 10],
+	["F13", "*", 2000, 2002, -9, 10],
+	["F14", "male", 2000, 2002, -6, 10],
+	["F15", "female", 2000, 2002, -6, 10],
+	["F16", "*", 0, 1980, -6, -3],
+	["F17", "*", 0, 1980, -2, 10],
+	["F18", "male", 0, 1980, -2, 10],
+	["F19", "female", 0, 1980, -2, 10],
+	["F20", "*", 0, 2003, -9, 10],
+	["F21", "male", 0, 1999, -4, 10],
+	["F22", "female", 0, 1999, -4, 10],
+	["F23", "*", 0, 2003, -9, 10],
+	["F24", "*", 0, 2015, -9, 10],
 	];	
 	
 var model, pages;		
@@ -734,12 +740,24 @@ $(function () {
 	/* Content verifiers */
 	model = new GlobalModel();
 	pages = new Pages();
-			
+
 	// Add slots to variables that are supplied by the server and not modified by the UI
 	model.addVariable("emailAddress");
 	model.addVariable("personid");
 	model.addVariable("role");
 	model.addVariable("manager");
+	model.setValue("optionalBanquette", false);
+	model.setValue("optionalHoodie", false);
+	model.setValue("optionalIFGticket", false);
+	model.setValue("optionalJudgeSeminars", false);
+	model.setValue("optionalKidsSeminars", false);
+	model.setValue("optionalSeminars", false);
+	model.setValue("optionalTshirt", false);
+	model.setValue("optionalWTCticket", false);
+	model.fetch();	
+	
+	
+	//model.setValue("taidoRank", "");
 	
 	// Control buttons
 	$("#nextButton").button().click(function() {pages.nextPage();});
@@ -776,13 +794,13 @@ $(function () {
 	});
 	
 	
-	model.addEffect(["manager"], function() {
+	/*model.addEffect(["manager"], function() {
 		if (model.getValue("manager") == 1) {
 			// For managers, remove all the ability to choose a nationality
-			$('.variable[data-variable="nationality"][data-value!="' + model.getValue("nationality") +'"]').remove();
+			//$('.variable[data-variable="nationality"][data-value!="' + model.getValue("nationality") +'"]').remove();
 		}
 	});
-	
+	*/
 //	$("#saveButton").button().click(function(event) {model.store("cache");});
 	
 	model.addRule("nationality", function(value) {return value != null;});
@@ -804,37 +822,52 @@ $(function () {
 	// Ensure birthdays are correct 
 	model.addRule("birthDay", function(value) {return ((value >= 1) && (value <= 31));});
 	model.addRule("birthMonth", function(value) {return ((value >= 1) && (value <= 12));});
-	model.addRule("birthYear", function(value) {return ((value >= 1800) && (value <= 2013));});
+	model.addRule("birthYear", function(value) {return ((value >= 1800) && (value <= 2015));});
 	
 	// Show toggle for shinsa only if the person has 4 dan or above
 	model.addRule("taidoRank", function(value) { return (value != undefined) && (value != []) && (value != null);});
 	
 	model.addEffect(["taidoRank"], function() {
-		model.setEnabled("renshi", model.getValue("taidoRank") >= 4);
+		model.setEnabled("renshi", model.getValue("taidoRank") >= 4 && model.getValue("taidoRank") < 6);
+        model.setEnabled("kyoshi", model.getValue("taidoRank") >= 6 && model.getValue("taidoRank") < 8);
+        model.setEnabled("hanshi", model.getValue("taidoRank") >= 8);
 	});	
 	
-	
+	model.addEffect(["birthYear", "package", "kidspackage"], function() {
+	    model.setEnabled("role", (model.getValue("birthYear") <= 2003 ? true:false));
+		model.setEnabled("kidspackage", (model.getValue("birthYear") <= 2003 ? false:true));
+	});
 	// Cost for international friendship games
 	model.addVariable("ifgCost");
 	var events = new Array();
 	for(var i = 0; i < eventRules.length; ++i) {
 		events.push("event"+eventRules[i][0]);
 	}
+	
 	model.addEffect(events, function() {
 		var selected = false;
 		for(var i = 0; i < eventRules.length && !selected; ++i) {
+		    if (i != 10) {
 			selected |= model.getValue("event"+eventRules[i][0]) == "yes";
+			}
 		}
+	
 		model.setValue("ifgCost",(selected)?350:0);		
 	});
 	
+	model.addEffect(["package", "ifgCost"], function () {
+
+	/*	switch (model.getValue("package")) {
+		case "Tourist": model.setValue("ifgCost", 0); break;
+		}*/
+	});
 	// Age alerts for events
-	var eventRuleAlerts = ["B3", "B4", "B7", "B8", "B20", "B21"];
+	var eventRuleAlerts = ["F3", "F4", "F7", "F8", "F19", "F21", "F22"];
 	for (var i = 0; i < eventRuleAlerts.length; ++i) {
 		var event = "event"+eventRuleAlerts[i];
 		var func = function(event) {
 			return function() {
-				if (model.getValue("birthYear") >= 1995 && model.getValue("birthYear") <= 1997 && 
+				if (model.getValue("birthYear") >= 1995 && model.getValue("birthYear") <= 1999 && 
 					model.getValue(event) == "yes") {
 					$("#"+event+"warning").removeClass("disabled");
 				} else {
@@ -848,9 +881,13 @@ $(function () {
 	
 	model.addRule("sex", function(value) {return ((value != undefined) && (value != null) && (value != []));});	
 	
+	model.addEffect(["role", "package", "manager"], function() {
+	    model.setEnabled("manager", ((model.getValue("package") == "WTC Competitor") || (model.getValue("role") == "wtc")));
+		
+	});
 	// Ensure judging is allowed only in specific situations
 	model.addEffect(["taidoRank", "ifgCost", "role", "package", "willComplete4dan"], function() {
-		var truth = (model.getValue("taidoRank") >= 1) && !(model.getValue("ifgCost") > 0) && !(model.getValue("role") == "staff");
+		var truth = (model.getValue("taidoRank") >= 1) && !(model.getValue("ifgCost") > 0) && !(model.getValue("role") == "staff") && !(model.getValue("package") == "Tourist") && !(model.getValue("package") == "Staff");
 		model.setEnabled("ifgJudge", truth);
 		pages.setEnabled("judgePage", truth);
 		truth &= (model.getValue("taidoRank") >= 4) || ((model.getValue("taidoRank") == 3) && (model.getValue("willComplete4dan") == "yes"));
@@ -859,9 +896,10 @@ $(function () {
 	});
 		
 	// Allow volunteer work only when no overlapping events are selected
-	model.addEffect(["ifgCost", "role", "ifgJudge", "wtcJudge"], function () {
-		var occupied028 = (model.getValue("ifgCost") > 0) || (model.getValue("ifgJudge") == "yes") || (model.getValue("role")=="staff");
-	//	model.setEnabled("volunteer", !occupied028);
+	model.addEffect(["ifgCost", "role", "ifgJudge", "wtcJudge", "package","birthYear"], function () {
+		var occupied028 = (model.getValue("ifgCost") > 0) || (model.getValue("ifgJudge") == "yes") || (model.getValue("role")=="staff") || (model.getValue("package") =="WTC Competitor" || (model.getValue("birthYear") > 1997));;
+		model.setEnabled("volunteer", !occupied028);
+		pages.setEnabled("volunteerPage", !occupied028);
 	//	model.setEnabled("volunteerSecurity028", !occupied028);		
 		
 		var occupied038 = (model.getValue("role") == "wtc") || (model.getValue("wtcJudge") == "yes") || (model.getValue("role")=="staff");
@@ -870,19 +908,24 @@ $(function () {
 	//	model.setEnabled("volunteerIT038", !occupied038);		
 	});
 		
+        model.addEffect(["package"], function () {
+		pages.setEnabled("optionalPage", !(model.getValue("package") == "WTC Competitor"));
+	});
 	// Children of at most 12 have a cheaper tourist package
 	model.addEffect(["birthYear"], function() {
 		if (model.getValue("birthYear") >= 2001) {		
-			$("#touristPrice").html("1000 SEK");
+			$("#touristPrice").html("1350 SEK");
 			$("#wtcTicketPrice").html("50 SEK");
 		} else {
-			$("#touristPrice").html("1000 SEK");
+			$("#touristPrice").html("1350 SEK");
 			$("#wtcTicketPrice").html("100 SEK");
 		}
 	});
+
 	
+
 	// Enabled events that the person is allowed to enroll
-	model.addEffect(["taidoRank", "sex", "birthYear", "package", "ifgJudge", "wtcJudge", "eventB19", "eventB20", "eventB21", "eventB22"], function() {	
+	model.addEffect(["taidoRank", "sex", "birthYear", "package", "ifgJudge", "wtcJudge", "eventF19", "eventF20", "eventF21", "eventF22", "eventF23"], function() {	
 		var sex = model.getValue("sex");
 		var rank = model.getValue("taidoRank");
 		var birthYear = Number(model.getValue("birthYear"));
@@ -890,6 +933,8 @@ $(function () {
 		var disableAll = 
 			// WTC Competitors are not allowed to participate in IFG. 
 			(model.getValue("role") == "wtc") ||
+			(model.getValue("role") == "etc") ||
+			(model.getValue("package") == "WTC Competitor") ||
 			// Staffs are not allowed to compete in IFG
 			(model.getValue("role") == "staff") ||
 			// A judge is required to be IFG judge, and hence they can't participate in IFG.
@@ -920,10 +965,11 @@ $(function () {
 		}
 		pages.setEnabled("ifgEventsPage",!disableAll);
 		if (!disableAll) {
-			var truth = model.getValue("eventB19") == "yes";
-			truth |= model.getValue("eventB20") == "yes";
-			truth |= model.getValue("eventB21") == "yes";
-			truth |= model.getValue("eventB22") == "yes";		
+			var truth = model.getValue("eventF19") == "yes";
+			truth |= model.getValue("eventF20") == "yes";
+			truth |= model.getValue("eventF21") == "yes";
+			truth |= model.getValue("eventF22") == "yes";		
+			truth |= model.getValue("eventF23") == "yes";		
 			pages.setEnabled("ifgTeamsPage", truth);
 		} else {
 			pages.setEnabled("ifgTeamsPage", false);		
@@ -936,31 +982,33 @@ $(function () {
 	model.addEffect(["package"], function() {
 		var cost = 0;
 		var value = model.getValue("package");		
-		var includesHotel = false;
+		var includesHotel = true;
 		switch (value) {
 		case "WTC Competitor": cost = 1400; break;
-		case "Tourist": cost = (model.getValue("birthYear") >= 2001)?1000:1000; break;
-		case "Judge": cost = 900; break;
-		case "Staff": cost = 900; 
-		includesHotel = true;
-		break;
+		case "Tourist": cost = 1350; break;
+		case "Judge": cost = 1150; break;
 		case "Volunteer": cost = 0; break;
+        case "kids": cost = 400; break;
+		case "Staff": cost = 900; 
+			includesHotel = true;
+			break;
 		default: cost = 0;
 		}
 		model.setValue("packageCost", cost);
 		model.setEnabled("diet", value != null && value != undefined);
-		model.setEnabled("hotel38",!includesHotel);
-		model.setEnabled("hotel48",!includesHotel);
-		model.setEnabled("hotel58",!includesHotel);
-		model.setEnabled("hotel68",!includesHotel);
-		model.setEnabled("hotel78",!includesHotel);
-		model.setEnabled("hotel88",!includesHotel);
+		model.setEnabled("hotel38",includesHotel);
+		model.setEnabled("hotel48",includesHotel);
+		model.setEnabled("hotel58",includesHotel);
+		model.setEnabled("hotel68",value != "Staff");
+		model.setEnabled("hotel78",value != "Staff");
+		model.setEnabled("hotel88",value != "Staff");
+		model.setEnabled("hotel98",includesHotel);
 	});
 	
 	// Add warnings about empty team members	
-	model.addEffect(["teamB19_p1", "teamB19_p2", "teamB19_p3", "teamB19_p4", "teamB19_p5", "eventB19"], function() {		
+	model.addEffect(["teamB19_p1", "teamB19_p2", "teamB19_p3", "teamB19_p4", "teamB19_p5", "eventF20"], function() {		
 		// SelectPersonWidget stores an object as value when a person is selected, otherwise it is null
-		if (model.getValue("eventB19") == "yes") {
+		if (model.getValue("eventF20") == "yes") {
 			var nr = 0;
 			var teamNames = ["teamB19_p1", "teamB19_p2", "teamB19_p3", "teamB19_p4", "teamB19_p5"];			
 			$.each(teamNames, function() {
@@ -968,17 +1016,17 @@ $(function () {
 					++nr;
 			});
 			if (nr < teamNames.length)
-				$("#eventB19playerMissing").removeClass("disabled");
+				$("#eventF20playerMissing").removeClass("disabled");
 			else 
-				$("#eventB19playerMissing").addClass("disabled");
+				$("#eventF20playerMissing").addClass("disabled");
 		} else {
-			$("#eventB19playerMissing").addClass("disabled");
+			$("#eventF20playerMissing").addClass("disabled");
 		}
 	});
 	
-	model.addEffect(["teamB20_p1", "teamB20_p2", "teamB20_p3", "teamB20_p4", "teamB20_p5", "teamB20_lead", "eventB20"], function() {		
+	model.addEffect(["teamB20_p1", "teamB20_p2", "teamB20_p3", "teamB20_p4", "teamB20_p5", "teamB20_lead", "eventF21"], function() {		
 		// SelectPersonWidget stores an object as value when a person is selected, otherwise it is null
-		if (model.getValue("eventB20") == "yes") {
+		if (model.getValue("eventF21") == "yes") {
 			var nr = 0;
 			var teamNames = ["teamB20_p1", "teamB20_p2", "teamB20_p3", "teamB20_p4", "teamB20_p5", "teamB20_lead"];
 			$.each(teamNames, function() {
@@ -986,17 +1034,17 @@ $(function () {
 					++nr;
 			});
 			if (nr < teamNames.length)
-				$("#eventB20playerMissing").removeClass("disabled");
+				$("#eventF21playerMissing").removeClass("disabled");
 			else 
-				$("#eventB20playerMissing").addClass("disabled");
+				$("#eventF21playerMissing").addClass("disabled");
 		} else {
-			$("#eventB20playerMissing").addClass("disabled");
+			$("#eventF21playerMissing").addClass("disabled");
 		}
 	});
 	
-	model.addEffect(["teamB21_p1", "teamB21_p2", "teamB21_p3", "teamB21_p4", "teamB21_p5", "teamB21_lead", "eventB21"], function() {		
+	model.addEffect(["teamB21_p1", "teamB21_p2", "teamB21_p3", "teamB21_p4", "teamB21_p5", "teamB21_lead", "eventF22"], function() {		
 		// SelectPersonWidget stores an object as value when a person is selected, otherwise it is null
-		if (model.getValue("eventB21") == "yes") {
+		if (model.getValue("eventF22") == "yes") {
 			var nr = 0;
 			var teamNames = ["teamB21_p1", "teamB21_p2", "teamB21_p3", "teamB21_p4", "teamB21_p5", "teamB21_lead"];
 			$.each(teamNames, function() {
@@ -1004,17 +1052,17 @@ $(function () {
 					++nr;
 			});
 			if (nr < teamNames.length)
-				$("#eventB21playerMissing").removeClass("disabled");
+				$("#eventF22playerMissing").removeClass("disabled");
 			else 
-				$("#eventB21playerMissing").addClass("disabled");
+				$("#eventF22playerMissing").addClass("disabled");
 		} else {
-			$("#eventB21playerMissing").addClass("disabled");
+			$("#eventF22playerMissing").addClass("disabled");
 		}
 	});
 	
-	model.addEffect(["teamB22_p1", "teamB22_p2", "teamB22_p3", "teamB22_p4", "teamB22_p5", "teamB22_p6", "eventB22"], function() {		
+	model.addEffect(["teamB22_p1", "teamB22_p2", "teamB22_p3", "teamB22_p4", "teamB22_p5", "teamB22_p6", "eventF23"], function() {		
 		// SelectPersonWidget stores an object as value when a person is selected, otherwise it is null
-		if (model.getValue("eventB22") == "yes") {
+		if (model.getValue("eventF23") == "yes") {
 			var nr = 0;
 			var teamNames = ["teamB22_p1", "teamB22_p2", "teamB22_p3", "teamB22_p4", "teamB22_p5", "teamB22_p6"];
 			$.each(teamNames, function() {
@@ -1022,11 +1070,11 @@ $(function () {
 					++nr;
 			});
 			if (nr < teamNames.length)
-				$("#eventB22playerMissing").removeClass("disabled");
+				$("#eventF23playerMissing").removeClass("disabled");
 			else 
-				$("#eventB22playerMissing").addClass("disabled");
+				$("#eventF23playerMissing").addClass("disabled");
 		} else {
-			$("#eventB22playerMissing").addClass("disabled");
+			$("#eventF23playerMissing").addClass("disabled");
 		}
 	});
 	
@@ -1169,21 +1217,21 @@ $(function () {
 	model.addEffect(["package", "role"], function(value) {
 		model.setEnabled("optionalBanquette", (!(model.getValue("package"))) || (model.getValue("package")=="Volunteer"));
 		model.setEnabled("optionalWTCticket", (!(model.getValue("package")) || (model.getValue("package")=="Volunteer")) && (model.getValue("role") != "wtc"));
+		model.setEnabled("optionalIFGticket", (!(model.getValue("package")) || (model.getValue("package")=="Volunteer")) && (model.getValue("role") != "ifg"));
 	});		
 	
 	model.addVariable("optionalsCost");
-	model.addEffect(["optionalBanquette", "optionalWTCticket", "ultimateSauna", "hikingTour", "helsinkiTourWednesday", "helsinkiTourThursday", "tallinTour", "porvooTour"], function() {
+	model.addEffect(["optionalBanquette", "optionalWTCticket", "optionalIFGticket", "optionalJudgeSeminars", "optionalSeminars", "optionalKidsSeminars", "optionalTshirt", "optionalHoodie"], function() {
 		var cost = 0;
-		cost += (model.getValue("optionalBanquette") == "yes")?550:0;
-		if (model.getValue("optionalWTCticket") == "yes") {
-			cost += (model.getValue("birthYear") >= 2001)?50:50;
-		}
-		cost += (model.getValue("ultimateSauna") == "yes")?35:0;
-		cost += (model.getValue("hikingTour") == "yes")?70:0;
-		cost += (model.getValue("helsinkiTourWednesday") == "yes")?35:0;
-		cost += (model.getValue("helsinkiTourThursday") == "yes")?35:0;
-		cost += (model.getValue("tallinTour") == "yes")?70:0;
-		cost += (model.getValue("porvooTour") == "yes")?70:0;
+		cost += (model.getValue("optionalBanquette") == "yes")?600:0;
+		cost += (model.getValue("optionalWTCticket") == "yes")?100:0;
+		cost += (model.getValue("optionalIFGticket") == "yes")?50:0;
+		cost += (model.getValue("optionalJudgeSeminars") == "yes")?300:0;
+		cost += (model.getValue("optionalSeminars") == "yes")?400:0;
+		cost += (model.getValue("optionalKidsSeminars") == "yes")?250:0;
+		cost += (model.getValue("optionalTshirt") == "yes")?150:0;
+		cost += (model.getValue("optionalHoodie") == "yes")?350:0;
+
 		model.setValue("optionalsCost",cost);
 	});
 
@@ -1191,7 +1239,7 @@ $(function () {
 	model.addVariable("totalCost");
 	model.addEffect(["packageCost", "ifgCost", "hotelCost", "optionalsCost"], function() {
 		var cost = Number(model.getValue("packageCost"));
-		cost += Number(model.getValue("ifgCost"));
+		//cost += Number(model.getValue("ifgCost"));
 		cost += Number(model.getValue("hotelCost"));
 		cost += Number(model.getValue("optionalsCost"));
 		
